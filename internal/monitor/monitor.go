@@ -3,6 +3,7 @@ package monitor
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"sync"
@@ -144,9 +145,11 @@ func (m *Monitor) CheckService(svc *models.Service) {
 HealthCheckDone:
 
 	// STEP 2: Test ExampleURL (actual service functionality)
+	var exampleStatusCode int
 	if svc.ExampleURL != "" {
 		resp, err := m.client.Get(svc.ExampleURL)
 		if err == nil {
+			exampleStatusCode = resp.StatusCode
 			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
 				exampleOK = true
 			} else {
@@ -163,17 +166,27 @@ HealthCheckDone:
 	}
 
 	// STEP 3: Compute final status
+	// FIXED LOGIC:
+	// - 5xx errors (502, 500, 503) = UNHEALTHY (service is down)
+	// - 4xx errors (404, 401) = DEGRADED (service running but endpoint issue)
+	// - healthOK && exampleOK = HEALTHY
+	// - !healthOK = UNHEALTHY
 	var status string
 	var lastError string
 	if healthOK && exampleOK {
 		status = "healthy"
 		lastError = ""
-	} else if healthOK && !exampleOK {
-		status = "degraded" // /health works but actual service broken
-		lastError = exampleError
-	} else {
+	} else if !healthOK {
 		status = "unhealthy"
 		lastError = healthError
+	} else if exampleStatusCode >= 500 {
+		// 5xx errors = service is actually DOWN
+		status = "unhealthy"
+		lastError = exampleError
+	} else {
+		// 4xx or other client errors = degraded (service runs but has issues)
+		status = "degraded"
+		lastError = exampleError
 	}
 
 	elapsed := time.Since(start).Milliseconds()
@@ -222,67 +235,102 @@ func (m *Monitor) TestActiveLink(id string) (string, string, error) {
 	}
 
 	status := "failed"
-	errorMsg := ""
+	errMsg := ""
 	start := time.Now()
 
-	// PRIORITY 1: Test the actual ExampleURL (the service's main functionality)
-	if svc.ExampleURL != "" {
-		resp, err := client.Get(svc.ExampleURL)
-		elapsed := time.Since(start).Milliseconds()
+	// Build internal test URLs
+	// Services run on Docker containers accessible via container names
+	names := []string{}
+	if svc.DockerName != "" {
+		names = append(names, svc.DockerName)
+	}
+	if svc.ID != "" && svc.ID != svc.DockerName {
+		names = append(names, svc.ID+"-app-1")
+	}
 
-		if err != nil {
-			errorMsg = fmt.Sprintf("Connection error: %v", err)
-		} else {
-			defer resp.Body.Close()
-			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-				status = "passing"
-				errorMsg = fmt.Sprintf("HTTP %d in %dms", resp.StatusCode, elapsed)
-			} else {
-				errorMsg = fmt.Sprintf("HTTP %d: %s", resp.StatusCode, resp.Status)
+	ports := []int{}
+	if svc.Port > 0 {
+		ports = append(ports, svc.Port)
+	}
+	if svc.Port != 8080 {
+		ports = append(ports, 8080)
+	}
+
+	// PRIORITY 1: Test via internal Docker endpoint with actual API path
+	// Example: http://go_dtss-app-1:8080/t/default_token/?url=https://example.com
+	if svc.ExampleURL != "" {
+		// Extract path from ExampleURL (e.g., /t/default_token/?url=https://example.com)
+		pathStart := 0
+		for i, c := range svc.ExampleURL {
+			if c == '/' && i > 8 { // Skip https://
+				pathStart = i
+				break
 			}
 		}
-	} else {
-		// FALLBACK: If no ExampleURL, test internal /health endpoint
-		names := []string{}
-		if svc.DockerName != "" {
-			names = append(names, svc.DockerName)
-		}
-		if svc.ID != "" && svc.ID != svc.DockerName {
-			names = append(names, svc.ID+"-app-1")
-		}
-
-		ports := []int{}
-		if svc.Port > 0 {
-			ports = append(ports, svc.Port)
-		}
-		if svc.Port != 8080 {
-			ports = append(ports, 8080)
-		}
+		path := svc.ExampleURL[pathStart:]
 
 		for _, name := range names {
 			for _, port := range ports {
-				testURL := fmt.Sprintf("http://%s:%d/health", name, port)
+				testURL := fmt.Sprintf("http://%s:%d%s", name, port, path)
 				resp, err := client.Get(testURL)
 				if err == nil {
 					defer resp.Body.Close()
+					elapsed := time.Since(start).Milliseconds()
+
+					// Check if response is valid JSON (actual service response)
+					bodyBytes, _ := io.ReadAll(resp.Body)
 					if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+						// Check if it's valid JSON with expected fields
+						var jsonCheck map[string]interface{}
+						if json.Unmarshal(bodyBytes, &jsonCheck) == nil {
+							// Valid JSON response
+							if _, hasResult := jsonCheck["result"]; hasResult {
+								status = "passing"
+								errMsg = fmt.Sprintf("OK in %dms", elapsed)
+								goto TestComplete
+							} else if _, hasTool := jsonCheck["tool"]; hasTool {
+								status = "passing"
+								errMsg = fmt.Sprintf("OK in %dms", elapsed)
+								goto TestComplete
+							}
+						}
+						// Valid HTTP but not expected JSON
 						status = "passing"
-						errorMsg = fmt.Sprintf("Internal health OK (port %d)", port)
+						errMsg = fmt.Sprintf("HTTP %d in %dms", resp.StatusCode, elapsed)
 						goto TestComplete
+					} else {
+						errMsg = fmt.Sprintf("HTTP %d: %s", resp.StatusCode, resp.Status)
 					}
 				}
 			}
 		}
-		if status == "failed" {
-			errorMsg = "No ExampleURL configured, internal health check failed"
+	}
+
+	// FALLBACK: If no ExampleURL or internal test failed, test /health
+	for _, name := range names {
+		for _, port := range ports {
+			testURL := fmt.Sprintf("http://%s:%d/health", name, port)
+			resp, err := client.Get(testURL)
+			if err == nil {
+				defer resp.Body.Close()
+				if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+					status = "passing"
+					errMsg = fmt.Sprintf("Health OK (port %d)", port)
+					goto TestComplete
+				}
+			}
 		}
+	}
+
+	if status == "failed" && errMsg == "" {
+		errMsg = "Could not reach service via any endpoint"
 	}
 
 TestComplete:
 	m.registry.Mu.Lock()
 	svc.TestStatus = status
-	svc.TestError = errorMsg
+	svc.TestError = errMsg
 	m.registry.Mu.Unlock()
 
-	return status, errorMsg, nil
+	return status, errMsg, nil
 }
