@@ -7,22 +7,24 @@ import (
 
 // Service represents a monitored microservice
 type Service struct {
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
-	DisplayName string    `json:"display_name"`
-	Description string    `json:"description"`
-	Category    string    `json:"category"`
-	Port        int       `json:"port"`
-	DockerName  string    `json:"docker_name"`
-	RepoURL     string    `json:"repo_url"`
-	ExampleURL  string    `json:"example_url"`
-	HealthURL   string    `json:"health_url"`
-	Status      string    `json:"status"`
-	TestStatus  string    `json:"test_status"`
-	Version     string    `json:"version"`
-	LastChecked time.Time `json:"last_checked"`
-	ResponseMs  int64     `json:"response_ms"`
-	Tags        []string  `json:"tags"`
+	ID            string    `json:"id"`
+	Name          string    `json:"name"`
+	DisplayName   string    `json:"display_name"`
+	Description   string    `json:"description"`
+	Category      string    `json:"category"`
+	Port          int       `json:"port"`
+	DockerName    string    `json:"docker_name"`
+	RepoURL       string    `json:"repo_url"`
+	ExampleURL    string    `json:"example_url"`
+	HealthURL     string    `json:"health_url"`
+	Status        string    `json:"status"`
+	TestStatus    string    `json:"test_status"`
+	TestError     string    `json:"test_error,omitempty"`
+	Version       string    `json:"version"`
+	LastChecked   time.Time `json:"last_checked"`
+	ResponseMs    int64     `json:"response_ms"`
+	Tags          []string  `json:"tags"`
+	HealthHistory []string  `json:"health_history,omitempty"` // Last 5 checks: "healthy", "unhealthy"
 }
 
 // Registry holds all services

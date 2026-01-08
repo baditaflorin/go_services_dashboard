@@ -72,7 +72,7 @@ func (h *Handler) HandleManualTest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	status, err := h.Monitor.TestActiveLink(id)
+	status, errMsg, err := h.Monitor.TestActiveLink(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
@@ -82,6 +82,7 @@ func (h *Handler) HandleManualTest(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{
 		"id":          id,
 		"test_status": status,
+		"test_error":  errMsg,
 	})
 }
 
@@ -103,7 +104,7 @@ func (h *Handler) HandleCategoryTest(w http.ResponseWriter, r *http.Request) {
 
 	for _, svc := range services {
 		if svc.Category == category {
-			status, err := h.Monitor.TestActiveLink(svc.ID)
+			status, _, err := h.Monitor.TestActiveLink(svc.ID)
 			if err == nil {
 				tested++
 				if status == "passing" {
@@ -118,5 +119,35 @@ func (h *Handler) HandleCategoryTest(w http.ResponseWriter, r *http.Request) {
 		"category": category,
 		"tested":   tested,
 		"passed":   passed,
+	})
+}
+
+// HandleRefresh triggers a full health check of all services
+func (h *Handler) HandleRefresh(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Trigger async check
+	go h.Monitor.CheckAll()
+
+	// Return current stats
+	list := h.Registry.GetAll()
+	total := len(list)
+	healthy := 0
+
+	for _, s := range list {
+		if s.Status == "healthy" {
+			healthy++
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"message":   "Refresh triggered",
+		"total":     total,
+		"healthy":   healthy,
+		"unhealthy": total - healthy,
 	})
 }

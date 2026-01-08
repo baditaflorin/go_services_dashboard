@@ -147,6 +147,11 @@ CheckComplete:
 	if version != "" {
 		svc.Version = version
 	}
+	// Track health history (last 5 checks)
+	svc.HealthHistory = append(svc.HealthHistory, status)
+	if len(svc.HealthHistory) > 5 {
+		svc.HealthHistory = svc.HealthHistory[1:]
+	}
 	m.registry.Mu.Unlock()
 }
 
@@ -160,72 +165,83 @@ func parseVersion(resp *http.Response) string {
 	return ""
 }
 
-// TestActiveLink checks if the service is reachable (manual trigger)
-// Tries internal Docker DNS first, then falls back to public ExampleURL
-func (m *Monitor) TestActiveLink(id string) (string, error) {
+// TestActiveLink tests if the service's ExampleURL is actually working
+// This tests the REAL functionality, not just the /health endpoint
+func (m *Monitor) TestActiveLink(id string) (string, string, error) {
 	m.registry.Mu.RLock()
 	svc, exists := m.registry.Services[id]
 	m.registry.Mu.RUnlock()
 
 	if !exists {
-		return "", fmt.Errorf("service not found")
+		return "", "", fmt.Errorf("service not found")
 	}
 
 	client := http.Client{
-		Timeout: 5 * time.Second,
+		Timeout: 10 * time.Second,
 	}
 
 	status := "failed"
+	errorMsg := ""
+	start := time.Now()
 
-	// Try internal Docker endpoints first (using discovered DockerName/Port from health checks)
-	names := []string{}
-	if svc.DockerName != "" {
-		names = append(names, svc.DockerName)
-	}
-	if svc.ID != "" && svc.ID != svc.DockerName {
-		names = append(names, svc.ID)
-		names = append(names, svc.ID+"-app-1")
-	}
-
-	ports := []int{}
-	if svc.Port > 0 {
-		ports = append(ports, svc.Port)
-	}
-	if svc.Port != 8080 {
-		ports = append(ports, 8080)
-	}
-
-	// Try internal endpoints
-	for _, name := range names {
-		for _, port := range ports {
-			// Try root endpoint or health endpoint
-			testURL := fmt.Sprintf("http://%s:%d/health", name, port)
-			resp, err := client.Get(testURL)
-			if err == nil {
-				defer resp.Body.Close()
-				if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-					status = "passing"
-					goto TestComplete
-				}
-			}
-		}
-	}
-
-	// Fallback to public ExampleURL if internal failed
-	if status != "passing" && svc.ExampleURL != "" {
+	// PRIORITY 1: Test the actual ExampleURL (the service's main functionality)
+	if svc.ExampleURL != "" {
 		resp, err := client.Get(svc.ExampleURL)
-		if err == nil {
+		elapsed := time.Since(start).Milliseconds()
+
+		if err != nil {
+			errorMsg = fmt.Sprintf("Connection error: %v", err)
+		} else {
 			defer resp.Body.Close()
 			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
 				status = "passing"
+				errorMsg = fmt.Sprintf("HTTP %d in %dms", resp.StatusCode, elapsed)
+			} else {
+				errorMsg = fmt.Sprintf("HTTP %d: %s", resp.StatusCode, resp.Status)
 			}
+		}
+	} else {
+		// FALLBACK: If no ExampleURL, test internal /health endpoint
+		names := []string{}
+		if svc.DockerName != "" {
+			names = append(names, svc.DockerName)
+		}
+		if svc.ID != "" && svc.ID != svc.DockerName {
+			names = append(names, svc.ID+"-app-1")
+		}
+
+		ports := []int{}
+		if svc.Port > 0 {
+			ports = append(ports, svc.Port)
+		}
+		if svc.Port != 8080 {
+			ports = append(ports, 8080)
+		}
+
+		for _, name := range names {
+			for _, port := range ports {
+				testURL := fmt.Sprintf("http://%s:%d/health", name, port)
+				resp, err := client.Get(testURL)
+				if err == nil {
+					defer resp.Body.Close()
+					if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+						status = "passing"
+						errorMsg = fmt.Sprintf("Internal health OK (port %d)", port)
+						goto TestComplete
+					}
+				}
+			}
+		}
+		if status == "failed" {
+			errorMsg = "No ExampleURL configured, internal health check failed"
 		}
 	}
 
 TestComplete:
 	m.registry.Mu.Lock()
 	svc.TestStatus = status
+	svc.TestError = errorMsg
 	m.registry.Mu.Unlock()
 
-	return status, nil
+	return status, errorMsg, nil
 }

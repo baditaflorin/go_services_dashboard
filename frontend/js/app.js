@@ -17,15 +17,65 @@ class ServicesDashboard {
         await this.fetchServices();
         await this.fetchStats();
         this.render();
+        this.updateLastChecked();
 
-        // Auto-refresh every 30 seconds
-        setInterval(() => {
-            this.fetchServices();
-            this.fetchStats();
-        }, 30000);
+        // Auto-refresh countdown
+        this.refreshInterval = 30;
+        this.countdown = this.refreshInterval;
+        this.startCountdown();
 
         // Expose for onclick handlers
         window.dashboard = this;
+    }
+
+    startCountdown() {
+        setInterval(() => {
+            this.countdown--;
+            const countdownEl = document.getElementById('countdown');
+            if (countdownEl) countdownEl.textContent = `${this.countdown}s`;
+
+            if (this.countdown <= 0) {
+                this.fetchServices();
+                this.fetchStats();
+                this.updateLastChecked();
+                this.countdown = this.refreshInterval;
+            }
+        }, 1000);
+    }
+
+    updateLastChecked() {
+        const el = document.getElementById('last-checked');
+        if (el) {
+            const now = new Date();
+            el.textContent = `Last: ${now.toLocaleTimeString()}`;
+        }
+    }
+
+    async refreshAll() {
+        const btn = document.getElementById('refresh-btn');
+        if (btn) {
+            btn.textContent = '🔄 Refreshing...';
+            btn.disabled = true;
+        }
+
+        try {
+            await fetch('/api/refresh', { method: 'POST' });
+            // Wait a moment for checks to complete
+            setTimeout(async () => {
+                await this.fetchServices();
+                await this.fetchStats();
+                this.render();
+                this.updateLastChecked();
+                this.countdown = this.refreshInterval;
+            }, 2000);
+        } catch (e) {
+            console.error('Refresh failed:', e);
+        } finally {
+            if (btn) {
+                btn.textContent = '🔄 Refresh All';
+                btn.disabled = false;
+            }
+        }
     }
 
     bindEvents() {
@@ -194,6 +244,9 @@ class ServicesDashboard {
     renderServiceCard(svc) {
         const statusClass = svc.status || 'unknown';
         const responseTimeClass = this.getResponseTimeClass(svc.response_ms);
+        const healthHistoryHtml = this.renderHealthHistory(svc.health_history || []);
+        const lastCheckedTime = svc.last_checked ? new Date(svc.last_checked).toLocaleTimeString() : '--';
+        const testErrorTitle = svc.test_error ? `title="${svc.test_error}"` : '';
 
         return `
             <div class="service-card ${statusClass}">
@@ -216,18 +269,21 @@ class ServicesDashboard {
         ).join('')}
                 </div>
                 
-                ${svc.response_ms > 0 ? `
-                    <div class="response-time ${responseTimeClass}">
-                        Response: ${svc.response_ms}ms
-                    </div>
-                ` : ''}
+                <div class="service-timing">
+                    ${svc.response_ms > 0 ? `
+                        <span class="response-time ${responseTimeClass}">${svc.response_ms}ms</span>
+                    ` : ''}
+                    <span class="last-check">Checked: ${lastCheckedTime}</span>
+                </div>
+
+                ${healthHistoryHtml}
                 
                 <div class="service-actions">
                     <div class="test-controls">
                         <a href="${svc.example_url}" target="_blank" class="test-link" title="${svc.example_url}">
                             <span class="link-icon">🔗</span> Test Link
                         </a>
-                        <button onclick="window.dashboard.runTest('${svc.id}')" class="test-btn ${svc.test_status === 'passing' ? 'success' : (svc.test_status === 'failed' ? 'error' : '')}" title="Run Manual Test">
+                        <button onclick="window.dashboard.runTest('${svc.id}')" class="test-btn ${svc.test_status === 'passing' ? 'success' : (svc.test_status === 'failed' ? 'error' : '')}" ${testErrorTitle}>
                             Run Test ${svc.test_status === 'passing' ? '✓' : (svc.test_status === 'failed' ? '✗' : '')}
                         </button>
                     </div>
@@ -238,6 +294,14 @@ class ServicesDashboard {
                 </div>
             </div>
         `;
+    }
+
+    renderHealthHistory(history) {
+        if (!history || history.length === 0) return '';
+        const dots = history.map(status =>
+            `<span class="history-dot ${status === 'healthy' ? 'healthy' : 'unhealthy'}" title="${status}"></span>`
+        ).join('');
+        return `<div class="health-history" title="Last ${history.length} health checks">${dots}</div>`;
     }
 
     async runTest(id) {

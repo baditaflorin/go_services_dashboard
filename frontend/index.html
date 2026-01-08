@@ -34,6 +34,13 @@
                         <span class="stat-value" id="uptime-percent">-</span>
                         <span class="stat-label">Uptime</span>
                     </div>
+                    <div class="refresh-controls">
+                        <button id="refresh-btn" class="refresh-btn" onclick="window.dashboard.refreshAll()">
+                            🔄 Refresh All
+                        </button>
+                        <span id="countdown" class="countdown" title="Time until next auto-refresh">30s</span>
+                        <span id="last-checked" class="last-checked">Last check: --</span>
+                    </div>
                 </div>
             </div>
         </header>
