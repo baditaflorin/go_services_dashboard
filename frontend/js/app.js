@@ -18,6 +18,7 @@ class ServicesDashboard {
         await this.fetchStats();
         this.render();
         this.updateLastChecked();
+        this.subscribeToEvents();
 
         // Auto-refresh countdown
         this.refreshInterval = 30;
@@ -249,7 +250,7 @@ class ServicesDashboard {
         const testErrorTitle = svc.test_error ? `title="${svc.test_error}"` : '';
 
         return `
-            <div class="service-card ${statusClass}">
+            <div id="service-${svc.id}" class="service-card ${statusClass}">
                 <div class="card-header">
                     <h3 class="service-name">${svc.display_name}</h3>
                     <div class="status-indicator ${statusClass}">
@@ -366,6 +367,51 @@ class ServicesDashboard {
     updateViewMode() {
         const grid = document.getElementById('services-grid');
         grid.classList.toggle('list-view', this.viewMode === 'list');
+    }
+
+    subscribeToEvents() {
+        const evtSource = new EventSource('/api/events');
+
+        evtSource.onopen = () => {
+            console.log('SSE Connected');
+        };
+
+        evtSource.onmessage = (event) => {
+            if (!event.data) return;
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === 'connected') return;
+                this.handleUpdate(data);
+            } catch (e) {
+                console.error('SSE Parse Error', e);
+            }
+        };
+
+        evtSource.onerror = (err) => {
+            console.error('SSE Error:', err);
+            // Browser attempts reconnection automatically
+        };
+    }
+
+    handleUpdate(update) {
+        const index = this.services.findIndex(s => s.id === update.id);
+        if (index !== -1) {
+            const oldStatus = this.services[index].status;
+
+            // Merge updates
+            this.services[index] = { ...this.services[index], ...update };
+
+            // Re-render card if present
+            const card = document.getElementById(`service-${update.id}`);
+            if (card) {
+                card.outerHTML = this.renderServiceCard(this.services[index]);
+            }
+
+            // Refresh stats if status changed
+            if (update.status && oldStatus !== update.status) {
+                this.fetchStats();
+            }
+        }
     }
 }
 

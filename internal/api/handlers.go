@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/baditaflorin/go_services_dashboard/internal/models"
@@ -150,4 +151,39 @@ func (h *Handler) HandleRefresh(w http.ResponseWriter, r *http.Request) {
 		"healthy":   healthy,
 		"unhealthy": total - healthy,
 	})
+}
+
+// HandleEvents streams real-time service updates via SSE
+func (h *Handler) HandleEvents(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/event-stream")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Connection", "keep-alive")
+
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		http.Error(w, "Streaming unsupported", http.StatusInternalServerError)
+		return
+	}
+
+	ch := h.Monitor.Subscribe()
+	defer h.Monitor.Unsubscribe(ch)
+
+	// Send connection established message
+	fmt.Fprintf(w, "data: {\"type\":\"connected\"}\n\n")
+	flusher.Flush()
+
+	notify := r.Context().Done()
+
+	for {
+		select {
+		case <-notify:
+			return
+		case update := <-ch:
+			data, err := json.Marshal(update)
+			if err == nil {
+				fmt.Fprintf(w, "data: %s\n\n", data)
+				flusher.Flush()
+			}
+		}
+	}
 }
