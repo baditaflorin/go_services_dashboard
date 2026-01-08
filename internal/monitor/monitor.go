@@ -168,6 +168,7 @@ HealthCheckDone:
 	// STEP 3: Compute final status
 	// FIXED LOGIC:
 	// - 5xx errors (502, 500, 503) = UNHEALTHY (service is down)
+	// - Connection errors (status 0) = UNHEALTHY (can't reach service)
 	// - 4xx errors (404, 401) = DEGRADED (service running but endpoint issue)
 	// - healthOK && exampleOK = HEALTHY
 	// - !healthOK = UNHEALTHY
@@ -179,12 +180,12 @@ HealthCheckDone:
 	} else if !healthOK {
 		status = "unhealthy"
 		lastError = healthError
-	} else if exampleStatusCode >= 500 {
-		// 5xx errors = service is actually DOWN
+	} else if exampleStatusCode >= 500 || exampleStatusCode == 0 {
+		// 5xx errors or connection failures = service is actually DOWN
 		status = "unhealthy"
 		lastError = exampleError
 	} else {
-		// 4xx or other client errors = degraded (service runs but has issues)
+		// 4xx errors = degraded (service runs but has endpoint issues)
 		status = "degraded"
 		lastError = exampleError
 	}
