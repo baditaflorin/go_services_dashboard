@@ -1,0 +1,25 @@
+# deploy.yaml - Deployment configuration
+build:
+  platform: linux/amd64
+  dockerfile: Dockerfile
+
+registry:
+  host: ghcr.io
+  org: baditaflorin
+  image: go_services_dashboard
+
+docker:
+  network: pentest_network
+  restart: unless-stopped
+  port: 43565
+
+server:
+  host: ubuntu_vm@0docker.com
+  port: 11023
+  deploy_path: ~/pentest/go_services_dashboard
+
+nginx:
+  vm: florin@0docker.com
+  port: 11022
+  config_path: /etc/nginx/sites-enabled/
+  subdomain: services-dashboard.0crawl.com

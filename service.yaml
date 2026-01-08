@@ -1,0 +1,29 @@
+# service.yaml - Service metadata for automation and AI context
+id: go_services_dashboard
+name: Services Dashboard
+category: domains
+version: "1.0.0"
+
+# API Configuration
+api:
+  endpoint: /t/{token}/services_dashboard
+  method: GET
+  params:
+    - name: url
+      type: string
+      required: true
+
+# Health & Monitoring
+health:
+  endpoint: /health
+  expected_status: 200
+
+# Example request for testing
+test:
+  url: /t/default_token/services_dashboard?url=https://example.com
+  expected_status: 200
+
+# Dependencies
+requires:
+  - docker
+  - pentest_network
