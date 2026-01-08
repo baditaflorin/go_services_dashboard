@@ -88,21 +88,32 @@ func (m *Monitor) Start() {
 
 func (m *Monitor) CheckAll() {
 	services := m.registry.GetAll()
-	var wg sync.WaitGroup
-	semaphore := make(chan struct{}, 20) // Limit concurrent checks
+	log.Printf("Starting health check cycle for %d services...", len(services))
 
-	for _, svc := range services {
+	// Worker Pool: Limit concurrent checks to prevent network exhaustion
+	numWorkers := 10
+	jobs := make(chan *models.Service, len(services))
+	var wg sync.WaitGroup
+
+	// Start workers
+	for w := 0; w < numWorkers; w++ {
 		wg.Add(1)
-		go func(s *models.Service) {
+		go func() {
 			defer wg.Done()
-			semaphore <- struct{}{}
-			defer func() { <-semaphore }()
-			m.CheckService(s)
-		}(svc)
+			for svc := range jobs {
+				m.CheckService(svc)
+			}
+		}()
 	}
 
+	// Enqueue jobs
+	for _, svc := range services {
+		jobs <- svc
+	}
+	close(jobs)
+
 	wg.Wait()
-	log.Printf("Health check completed for %d services", len(services))
+	log.Printf("Health check cycle completed.")
 }
 
 func (m *Monitor) CheckService(svc *models.Service) {
