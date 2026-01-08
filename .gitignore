@@ -1,0 +1,17 @@
+# Binaries
+dashboard
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files (use .env.example for template)
+.env.local
+.env.production

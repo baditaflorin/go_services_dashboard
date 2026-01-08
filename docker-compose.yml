@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    image: ghcr.io/baditaflorin/go_services_dashboard:latest
+    container_name: go_services_dashboard
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "43565:43565"
+    networks:
+      - pentest_network
+
+networks:
+  pentest_network:
+    external: true
