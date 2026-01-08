@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
@@ -117,7 +118,27 @@ func (m *Monitor) CheckAll() {
 }
 
 func (m *Monitor) CheckService(svc *models.Service) {
-	result := checker.CheckService(m.client, svc)
+	m.registry.Mu.Lock()
+	// Circuit Breaker Check
+	if !svc.CircuitOpenUntil.IsZero() && time.Now().Before(svc.CircuitOpenUntil) {
+		svc.Status = "unhealthy"
+		svc.LastError = fmt.Sprintf("Circuit Open (cooling down until %s)", svc.CircuitOpenUntil.Format("15:04:05"))
+		m.registry.Mu.Unlock()
+		return
+	}
+	m.registry.Mu.Unlock()
+
+	// Retry Logic: Try up to 3 times (0s, 1s, 2s wait)
+	var result checker.CheckServiceResult
+	for attempt := 0; attempt < 3; attempt++ {
+		result = checker.CheckService(m.client, svc)
+		if result.Status == "healthy" {
+			break
+		}
+		if attempt < 2 {
+			time.Sleep(time.Duration(attempt+1) * time.Second)
+		}
+	}
 
 	m.registry.Mu.Lock()
 	svc.LastChecked = time.Now()
@@ -129,6 +150,19 @@ func (m *Monitor) CheckService(svc *models.Service) {
 	if result.Version != "" {
 		svc.Version = result.Version
 	}
+
+	// Circuit Breaker State Update
+	if result.Status != "healthy" {
+		svc.ConsecutiveFailures++
+		if svc.ConsecutiveFailures >= 5 {
+			svc.CircuitOpenUntil = time.Now().Add(5 * time.Minute)
+			svc.LastError = "Circuit Breaker Tripped (5 failing checks)"
+		}
+	} else {
+		svc.ConsecutiveFailures = 0
+		svc.CircuitOpenUntil = time.Time{}
+	}
+
 	// Track health history (last 5 checks)
 	svc.HealthHistory = append(svc.HealthHistory, result.Status)
 	if len(svc.HealthHistory) > 5 {

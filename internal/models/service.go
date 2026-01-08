@@ -7,27 +7,29 @@ import (
 
 // Service represents a monitored microservice
 type Service struct {
-	ID            string    `json:"id"`
-	Name          string    `json:"name"`
-	DisplayName   string    `json:"display_name"`
-	Description   string    `json:"description"`
-	Category      string    `json:"category"`
-	Port          int       `json:"port"`
-	DockerName    string    `json:"docker_name"`
-	RepoURL       string    `json:"repo_url"`
-	ExampleURL    string    `json:"example_url"`
-	HealthURL     string    `json:"health_url"`
-	Status        string    `json:"status"`         // healthy, degraded, unhealthy
-	HealthStatus  string    `json:"health_status"`  // /health endpoint status
-	ExampleStatus string    `json:"example_status"` // ExampleURL status
-	LastError     string    `json:"last_error,omitempty"`
-	TestStatus    string    `json:"test_status"`
-	TestError     string    `json:"test_error,omitempty"`
-	Version       string    `json:"version"`
-	LastChecked   time.Time `json:"last_checked"`
-	ResponseMs    int64     `json:"response_ms"`
-	Tags          []string  `json:"tags"`
-	HealthHistory []string  `json:"health_history,omitempty"` // Last 5 checks: "healthy", "unhealthy"
+	ID                  string    `json:"id"`
+	Name                string    `json:"name"`
+	DisplayName         string    `json:"display_name"`
+	Description         string    `json:"description"`
+	Category            string    `json:"category"`
+	Port                int       `json:"port"`
+	DockerName          string    `json:"docker_name"`
+	RepoURL             string    `json:"repo_url"`
+	ExampleURL          string    `json:"example_url"`
+	HealthURL           string    `json:"health_url"`
+	Status              string    `json:"status"`         // healthy, degraded, unhealthy
+	HealthStatus        string    `json:"health_status"`  // /health endpoint status
+	ExampleStatus       string    `json:"example_status"` // ExampleURL status
+	LastError           string    `json:"last_error,omitempty"`
+	TestStatus          string    `json:"test_status"`
+	TestError           string    `json:"test_error,omitempty"`
+	Version             string    `json:"version"`
+	LastChecked         time.Time `json:"last_checked"`
+	ResponseMs          int64     `json:"response_ms"`
+	Tags                []string  `json:"tags"`
+	HealthHistory       []string  `json:"health_history,omitempty"`     // Last 5 checks
+	ConsecutiveFailures int       `json:"-"`                            // Internal counter for circuit breaker
+	CircuitOpenUntil    time.Time `json:"circuit_open_until,omitempty"` // When to try again if breaker is open
 }
 
 // Registry holds all services
