@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
@@ -65,41 +66,82 @@ func (m *Monitor) checkAll() {
 func (m *Monitor) checkService(svc *Service) {
 	start := time.Now()
 
-	resp, err := m.client.Get(svc.HealthURL)
+	// Construct Internal Health URL for reliable checking within cluster
+	checkURL := svc.HealthURL
+	if svc.DockerName != "" && svc.Port > 0 {
+		checkURL = fmt.Sprintf("http://%s:%d/health", svc.DockerName, svc.Port)
+	}
+
+	// Check Health
+	resp, err := m.client.Get(checkURL)
 	elapsed := time.Since(start).Milliseconds()
 
 	m.registry.mu.Lock()
-	defer m.registry.mu.Unlock()
 
 	svc.LastChecked = time.Now()
 	svc.ResponseMs = elapsed
 
+	// Handle Health Result
 	if err != nil {
 		svc.Status = "unhealthy"
-		return
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		svc.Status = "unhealthy"
-		return
-	}
-
-	// Try to parse version from health response
-	var healthResp struct {
-		Status  string `json:"status"`
-		Version string `json:"version"`
-	}
-	if err := json.NewDecoder(resp.Body).Decode(&healthResp); err == nil {
-		if healthResp.Version != "" {
-			svc.Version = healthResp.Version
-		}
-		if healthResp.Status == "healthy" {
-			svc.Status = "healthy"
-		} else {
-			svc.Status = "unhealthy"
-		}
 	} else {
-		svc.Status = "healthy" // Assume healthy if 200 OK
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			svc.Status = "unhealthy"
+		} else {
+			// Try to parse version
+			var healthResp struct {
+				Status  string `json:"status"`
+				Version string `json:"version"`
+			}
+			if err := json.NewDecoder(resp.Body).Decode(&healthResp); err == nil {
+				if healthResp.Version != "" {
+					svc.Version = healthResp.Version
+				}
+				if healthResp.Status == "healthy" {
+					svc.Status = "healthy"
+				} else {
+					svc.Status = "unhealthy"
+				}
+			} else {
+				svc.Status = "healthy" // Assume healthy if 200 OK
+			}
+		}
 	}
+
+	m.registry.mu.Unlock()
+}
+
+// TestActiveLink checks the ExampleURL on demand (manual trigger)
+func (m *Monitor) TestActiveLink(id string) (string, error) {
+	m.registry.mu.RLock()
+	svc, exists := m.registry.services[id]
+	m.registry.mu.RUnlock()
+
+	if !exists {
+		return "", fmt.Errorf("service not found")
+	}
+
+	if svc.ExampleURL == "" {
+		return "skipped", nil
+	}
+
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	resp, err := client.Get(svc.ExampleURL)
+
+	status := "failed"
+	if err == nil {
+		defer resp.Body.Close()
+		if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+			status = "passing"
+		}
+	}
+
+	m.registry.mu.Lock()
+	svc.TestStatus = status
+	m.registry.mu.Unlock()
+
+	return status, nil
 }

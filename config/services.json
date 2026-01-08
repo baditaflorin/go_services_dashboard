@@ -1,0 +1,2000 @@
+[
+  {
+    "id": "go_a11y_quick",
+    "name": "go_a11y_quick",
+    "display_name": "A11y Quick",
+    "description": "Microservice for A11y Quick",
+    "category": "domains",
+    "port": 8155,
+    "docker_name": "go_a11y_quick-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_a11y_quick",
+    "example_url": "https://a11y-quick.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://a11y-quick.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_accessibility_score",
+    "name": "go_accessibility_score",
+    "display_name": "Accessibility Score",
+    "description": "Microservice for Accessibility Score",
+    "category": "domains",
+    "port": 8177,
+    "docker_name": "go_accessibility_score-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_accessibility_score",
+    "example_url": "https://accessibility-score.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://accessibility-score.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_ad_density",
+    "name": "go_ad_density",
+    "display_name": "Ad Density",
+    "description": "Microservice for Ad Density",
+    "category": "domains",
+    "port": 8164,
+    "docker_name": "go_ad_density-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_ad_density",
+    "example_url": "https://ad-density.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://ad-density.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_address_extractor",
+    "name": "go_address_extractor",
+    "display_name": "Address Extractor",
+    "description": "Microservice for Address Extractor",
+    "category": "domains",
+    "port": 8153,
+    "docker_name": "go_address_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_address_extractor",
+    "example_url": "https://address-extractor.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://address-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_api_first",
+    "name": "go_api_first",
+    "display_name": "Api First",
+    "description": "Microservice for Api First",
+    "category": "domains",
+    "port": 8171,
+    "docker_name": "go_api_first-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_api_first",
+    "example_url": "https://api-first.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://api-first.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_biz_classifier",
+    "name": "go_biz_classifier",
+    "display_name": "Biz Classifier",
+    "description": "Microservice for Biz Classifier",
+    "category": "domains",
+    "port": 8176,
+    "docker_name": "go_biz_classifier-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_biz_classifier",
+    "example_url": "https://biz-classifier.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://biz-classifier.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_broken_links",
+    "name": "go_broken_links",
+    "display_name": "Broken Links",
+    "description": "Microservice for Broken Links",
+    "category": "domains",
+    "port": 8182,
+    "docker_name": "go_broken_links-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_broken_links",
+    "example_url": "https://broken-links.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://broken-links.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_cas",
+    "name": "go_cas",
+    "display_name": "Cas",
+    "description": "Microservice for Cas",
+    "category": "domains",
+    "port": 8163,
+    "docker_name": "go_cas-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_cas",
+    "example_url": "https://cas.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://cas.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_cognitive_load",
+    "name": "go_cognitive_load",
+    "display_name": "Cognitive Load",
+    "description": "Microservice for Cognitive Load",
+    "category": "domains",
+    "port": 8157,
+    "docker_name": "go_cognitive_load-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_cognitive_load",
+    "example_url": "https://cognitive-load.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://cognitive-load.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_company_size",
+    "name": "go_company_size",
+    "display_name": "Company Size",
+    "description": "Microservice for Company Size",
+    "category": "domains",
+    "port": 8174,
+    "docker_name": "go_company_size-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_company_size",
+    "example_url": "https://company-size.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://company-size.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_currency_detector",
+    "name": "go_currency_detector",
+    "display_name": "Currency Detector",
+    "description": "Microservice for Currency Detector",
+    "category": "domains",
+    "port": 8181,
+    "docker_name": "go_currency_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_currency_detector",
+    "example_url": "https://currency-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://currency-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_customer_logos",
+    "name": "go_customer_logos",
+    "display_name": "Customer Logos",
+    "description": "Microservice for Customer Logos",
+    "category": "domains",
+    "port": 8184,
+    "docker_name": "go_customer_logos-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_customer_logos",
+    "example_url": "https://customer-logos.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://customer-logos.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_data_inventory",
+    "name": "go_data_inventory",
+    "display_name": "Data Inventory",
+    "description": "Microservice for Data Inventory",
+    "category": "domains",
+    "port": 8154,
+    "docker_name": "go_data_inventory-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_data_inventory",
+    "example_url": "https://data-inventory.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://data-inventory.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_dependency_counter",
+    "name": "go_dependency_counter",
+    "display_name": "Dependency Counter",
+    "description": "Microservice for Dependency Counter",
+    "category": "domains",
+    "port": 8172,
+    "docker_name": "go_dependency_counter-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_dependency_counter",
+    "example_url": "https://dependency-counter.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://dependency-counter.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_dtss",
+    "name": "go_dtss",
+    "display_name": "Dtss",
+    "description": "Microservice for Dtss",
+    "category": "domains",
+    "port": 8162,
+    "docker_name": "go_dtss-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_dtss",
+    "example_url": "https://dtss.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://dtss.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_email_extractor",
+    "name": "go_email_extractor",
+    "display_name": "Email Extractor",
+    "description": "Microservice for Email Extractor",
+    "category": "domains",
+    "port": 8080,
+    "docker_name": "go_email_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_email_extractor",
+    "example_url": "https://email-extractor.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://email-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_emotional_tone",
+    "name": "go_emotional_tone",
+    "display_name": "Emotional Tone",
+    "description": "Microservice for Emotional Tone",
+    "category": "domains",
+    "port": 8158,
+    "docker_name": "go_emotional_tone-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_emotional_tone",
+    "example_url": "https://emotional-tone.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://emotional-tone.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_founding_year",
+    "name": "go_founding_year",
+    "display_name": "Founding Year",
+    "description": "Microservice for Founding Year",
+    "category": "domains",
+    "port": 8187,
+    "docker_name": "go_founding_year-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_founding_year",
+    "example_url": "https://founding-year.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://founding-year.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_funding_detector",
+    "name": "go_funding_detector",
+    "display_name": "Funding Detector",
+    "description": "Microservice for Funding Detector",
+    "category": "domains",
+    "port": 8150,
+    "docker_name": "go_funding_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_funding_detector",
+    "example_url": "https://funding-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://funding-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_gdpr_compliance",
+    "name": "go_gdpr_compliance",
+    "display_name": "Gdpr Compliance",
+    "description": "Microservice for Gdpr Compliance",
+    "category": "domains",
+    "port": 8175,
+    "docker_name": "go_gdpr_compliance-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_gdpr_compliance",
+    "example_url": "https://gdpr-compliance.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://gdpr-compliance.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_keyword_density",
+    "name": "go_keyword_density",
+    "display_name": "Keyword Density",
+    "description": "Microservice for Keyword Density",
+    "category": "domains",
+    "port": 8189,
+    "docker_name": "go_keyword_density-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_keyword_density",
+    "example_url": "https://keyword-density.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://keyword-density.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_legal_entity",
+    "name": "go_legal_entity",
+    "display_name": "Legal Entity",
+    "description": "Microservice for Legal Entity",
+    "category": "domains",
+    "port": 8160,
+    "docker_name": "go_legal_entity-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_legal_entity",
+    "example_url": "https://legal-entity.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://legal-entity.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_mobile_friendly",
+    "name": "go_mobile_friendly",
+    "display_name": "Mobile Friendly",
+    "description": "Microservice for Mobile Friendly",
+    "category": "domains",
+    "port": 8188,
+    "docker_name": "go_mobile_friendly-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_mobile_friendly",
+    "example_url": "https://mobile-friendly.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://mobile-friendly.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_office_locations",
+    "name": "go_office_locations",
+    "display_name": "Office Locations",
+    "description": "Microservice for Office Locations",
+    "category": "domains",
+    "port": 8151,
+    "docker_name": "go_office_locations-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_office_locations",
+    "example_url": "https://office-locations.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://office-locations.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_outlink_graph",
+    "name": "go_outlink_graph",
+    "display_name": "Outlink Graph",
+    "description": "Microservice for Outlink Graph",
+    "category": "domains",
+    "port": 8173,
+    "docker_name": "go_outlink_graph-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_outlink_graph",
+    "example_url": "https://outlink-graph.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://outlink-graph.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_page_load_metrics",
+    "name": "go_page_load_metrics",
+    "display_name": "Page Load Metrics",
+    "description": "Microservice for Page Load Metrics",
+    "category": "domains",
+    "port": 8183,
+    "docker_name": "go_page_load_metrics-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_page_load_metrics",
+    "example_url": "https://page-load-metrics.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://page-load-metrics.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_payment_detector",
+    "name": "go_payment_detector",
+    "display_name": "Payment Detector",
+    "description": "Microservice for Payment Detector",
+    "category": "domains",
+    "port": 8179,
+    "docker_name": "go_payment_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_payment_detector",
+    "example_url": "https://payment-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://payment-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_phone_extractor",
+    "name": "go_phone_extractor",
+    "display_name": "Phone Extractor",
+    "description": "Microservice for Phone Extractor",
+    "category": "domains",
+    "port": 8152,
+    "docker_name": "go_phone_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_phone_extractor",
+    "example_url": "https://phone-extractor.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://phone-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_press_mentions",
+    "name": "go_press_mentions",
+    "display_name": "Press Mentions",
+    "description": "Microservice for Press Mentions",
+    "category": "domains",
+    "port": 8233,
+    "docker_name": "go_press_mentions-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_press_mentions",
+    "example_url": "https://press-mentions.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://press-mentions.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_price_range",
+    "name": "go_price_range",
+    "display_name": "Price Range",
+    "description": "Microservice for Price Range",
+    "category": "domains",
+    "port": 8232,
+    "docker_name": "go_price_range-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_price_range",
+    "example_url": "https://price-range.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://price-range.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_remote_detector",
+    "name": "go_remote_detector",
+    "display_name": "Remote Detector",
+    "description": "Microservice for Remote Detector",
+    "category": "domains",
+    "port": 8186,
+    "docker_name": "go_remote_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_remote_detector",
+    "example_url": "https://remote-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://remote-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_revenue_model",
+    "name": "go_revenue_model",
+    "display_name": "Revenue Model",
+    "description": "Microservice for Revenue Model",
+    "category": "domains",
+    "port": 8198,
+    "docker_name": "go_revenue_model-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_revenue_model",
+    "example_url": "https://revenue-model.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://revenue-model.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_robots_parser",
+    "name": "go_robots_parser",
+    "display_name": "Robots Parser",
+    "description": "Microservice for Robots Parser",
+    "category": "domains",
+    "port": 8192,
+    "docker_name": "go_robots_parser-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_robots_parser",
+    "example_url": "https://robots-parser.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://robots-parser.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_scc",
+    "name": "go_scc",
+    "display_name": "Scc",
+    "description": "Microservice for Scc",
+    "category": "domains",
+    "port": 8165,
+    "docker_name": "go_scc-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_scc",
+    "example_url": "https://scc.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://scc.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_seasonal_detector",
+    "name": "go_seasonal_detector",
+    "display_name": "Seasonal Detector",
+    "description": "Microservice for Seasonal Detector",
+    "category": "domains",
+    "port": 8159,
+    "docker_name": "go_seasonal_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_seasonal_detector",
+    "example_url": "https://seasonal-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://seasonal-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_security_headers",
+    "name": "go_security_headers",
+    "display_name": "Security Headers",
+    "description": "Microservice for Security Headers",
+    "category": "domains",
+    "port": 8193,
+    "docker_name": "go_security_headers-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_security_headers",
+    "example_url": "https://security-headers.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://security-headers.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_seo_basics",
+    "name": "go_seo_basics",
+    "display_name": "Seo Basics",
+    "description": "Microservice for Seo Basics",
+    "category": "domains",
+    "port": 8156,
+    "docker_name": "go_seo_basics-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_seo_basics",
+    "example_url": "https://seo-basics.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://seo-basics.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_services_dashboard",
+    "name": "go_services_dashboard",
+    "display_name": "Services Dashboard",
+    "description": "Microservice for Services Dashboard",
+    "category": "domains",
+    "port": 43565,
+    "docker_name": "go_services_dashboard-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_services_dashboard",
+    "example_url": "https://services-dashboard.0crawl.com/api/services?url=https://example.com",
+    "health_url": "https://services-dashboard.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_shipping_regions",
+    "name": "go_shipping_regions",
+    "display_name": "Shipping Regions",
+    "description": "Microservice for Shipping Regions",
+    "category": "domains",
+    "port": 8180,
+    "docker_name": "go_shipping_regions-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_shipping_regions",
+    "example_url": "https://shipping-regions.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://shipping-regions.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_sitemap_finder",
+    "name": "go_sitemap_finder",
+    "display_name": "Sitemap Finder",
+    "description": "Microservice for Sitemap Finder",
+    "category": "domains",
+    "port": 8191,
+    "docker_name": "go_sitemap_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_sitemap_finder",
+    "example_url": "https://sitemap-finder.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://sitemap-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_social_graph",
+    "name": "go_social_graph",
+    "display_name": "Social Graph",
+    "description": "Microservice for Social Graph",
+    "category": "domains",
+    "port": 8194,
+    "docker_name": "go_social_graph-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_social_graph",
+    "example_url": "https://social-graph.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://social-graph.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_svi",
+    "name": "go_svi",
+    "display_name": "Svi",
+    "description": "Microservice for Svi",
+    "category": "domains",
+    "port": 8161,
+    "docker_name": "go_svi-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_svi",
+    "example_url": "https://svi.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://svi.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_team_size",
+    "name": "go_team_size",
+    "display_name": "Team Size",
+    "description": "Microservice for Team Size",
+    "category": "domains",
+    "port": 8185,
+    "docker_name": "go_team_size-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_team_size",
+    "example_url": "https://team-size.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://team-size.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_technology_stack",
+    "name": "go_technology_stack",
+    "display_name": "Technology Stack",
+    "description": "Microservice for Technology Stack",
+    "category": "domains",
+    "port": 8196,
+    "docker_name": "go_technology_stack-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_technology_stack",
+    "example_url": "https://technology-stack.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://technology-stack.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_tos_finder",
+    "name": "go_tos_finder",
+    "display_name": "Tos Finder",
+    "description": "Microservice for Tos Finder",
+    "category": "domains",
+    "port": 8195,
+    "docker_name": "go_tos_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_tos_finder",
+    "example_url": "https://tos-finder.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://tos-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_trust_decay",
+    "name": "go_trust_decay",
+    "display_name": "Trust Decay",
+    "description": "Microservice for Trust Decay",
+    "category": "domains",
+    "port": 8190,
+    "docker_name": "go_trust_decay-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_trust_decay",
+    "example_url": "https://trust-decay.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://trust-decay.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_ugc_detector",
+    "name": "go_ugc_detector",
+    "display_name": "Ugc Detector",
+    "description": "Microservice for Ugc Detector",
+    "category": "domains",
+    "port": 8178,
+    "docker_name": "go_ugc_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_ugc_detector",
+    "example_url": "https://ugc-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://ugc-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_update_frequency",
+    "name": "go_update_frequency",
+    "display_name": "Update Frequency",
+    "description": "Microservice for Update Frequency",
+    "category": "domains",
+    "port": 8199,
+    "docker_name": "go_update_frequency-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_update_frequency",
+    "example_url": "https://update-frequency.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://update-frequency.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_wps",
+    "name": "go_wps",
+    "display_name": "Wps",
+    "description": "Microservice for Wps",
+    "category": "domains",
+    "port": 8197,
+    "docker_name": "go_wps-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_wps",
+    "example_url": "https://wps.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://wps.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_xss_scanner",
+    "name": "go_xss_scanner",
+    "display_name": "Xss Scanner",
+    "description": "Microservice for Xss Scanner",
+    "category": "domains",
+    "port": 8144,
+    "docker_name": "go_xss_scanner-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_xss_scanner",
+    "example_url": "https://xss-scanner.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://xss-scanner.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "domains",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_apikey_scanner",
+    "name": "go_apikey_scanner",
+    "display_name": "Apikey Scanner",
+    "description": "Microservice for Apikey Scanner",
+    "category": "security",
+    "port": 8230,
+    "docker_name": "go_apikey_scanner-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_apikey_scanner",
+    "example_url": "https://apikey-scanner.0crawl.com/t/default_token/apikey-scanner?url=https://example.com",
+    "health_url": "https://apikey-scanner.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_clickjacking_tester",
+    "name": "go_clickjacking_tester",
+    "display_name": "Clickjacking Tester",
+    "description": "Microservice for Clickjacking Tester",
+    "category": "security",
+    "port": 8142,
+    "docker_name": "go_clickjacking_tester-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_clickjacking_tester",
+    "example_url": "https://clickjacking-tester.0crawl.com/t/default_token/clickjacking-tester?url=https://example.com",
+    "health_url": "https://clickjacking-tester.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_cookie_checker",
+    "name": "go_cookie_checker",
+    "display_name": "Cookie Checker",
+    "description": "Microservice for Cookie Checker",
+    "category": "security",
+    "port": 8143,
+    "docker_name": "go_cookie_checker-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_cookie_checker",
+    "example_url": "https://cookie-checker.0crawl.com/t/default_token/cookie-checker?url=https://example.com",
+    "health_url": "https://cookie-checker.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_cors_scanner",
+    "name": "go_cors_scanner",
+    "display_name": "Cors Scanner",
+    "description": "Microservice for Cors Scanner",
+    "category": "security",
+    "port": 8222,
+    "docker_name": "go_cors_scanner-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_cors_scanner",
+    "example_url": "https://cors-scanner.0crawl.com/t/default_token/cors-scanner?target=example.com",
+    "health_url": "https://cors-scanner.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_cors_tester",
+    "name": "go_cors_tester",
+    "display_name": "Cors Tester",
+    "description": "Microservice for Cors Tester",
+    "category": "security",
+    "port": 8141,
+    "docker_name": "go_cors_tester-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_cors_tester",
+    "example_url": "https://cors-tester.0crawl.com/t/default_token/cors-tester?target=example.com",
+    "health_url": "https://cors-tester.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_crlf_tester",
+    "name": "go_crlf_tester",
+    "display_name": "Crlf Tester",
+    "description": "Microservice for Crlf Tester",
+    "category": "security",
+    "port": 8220,
+    "docker_name": "go_crlf_tester-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_crlf_tester",
+    "example_url": "https://crlf-tester.0crawl.com/t/default_token/crlf-tester?target=example.com",
+    "health_url": "https://crlf-tester.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_debug_detector",
+    "name": "go_debug_detector",
+    "display_name": "Debug Detector",
+    "description": "Microservice for Debug Detector",
+    "category": "security",
+    "port": 8146,
+    "docker_name": "go_debug_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_debug_detector",
+    "example_url": "https://debug-detector.0crawl.com/t/default_token/debug-detector?url=https://example.com",
+    "health_url": "https://debug-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_graphql_introspection",
+    "name": "go_graphql_introspection",
+    "display_name": "Graphql Introspection",
+    "description": "Microservice for Graphql Introspection",
+    "category": "security",
+    "port": 8147,
+    "docker_name": "go_graphql_introspection-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_graphql_introspection",
+    "example_url": "https://graphql-introspection.0crawl.com/t/default_token/graphql-introspection?url=https://example.com",
+    "health_url": "https://graphql-introspection.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_host_header",
+    "name": "go_host_header",
+    "display_name": "Host Header",
+    "description": "Microservice for Host Header",
+    "category": "security",
+    "port": 8221,
+    "docker_name": "go_host_header-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_host_header",
+    "example_url": "https://host-header.0crawl.com/t/default_token/host-header?target=example.com",
+    "health_url": "https://host-header.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_idor_finder",
+    "name": "go_idor_finder",
+    "display_name": "Idor Finder",
+    "description": "Microservice for Idor Finder",
+    "category": "security",
+    "port": 8225,
+    "docker_name": "go_idor_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_idor_finder",
+    "example_url": "https://idor-finder.0crawl.com/t/default_token/idor-finder?url=https://example.com",
+    "health_url": "https://idor-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_iframe_analyzer",
+    "name": "go_iframe_analyzer",
+    "display_name": "Iframe Analyzer",
+    "description": "Microservice for Iframe Analyzer",
+    "category": "security",
+    "port": 8229,
+    "docker_name": "go_iframe_analyzer-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_iframe_analyzer",
+    "example_url": "https://iframe-analyzer.0crawl.com/t/default_token/iframe-analyzer?url=https://example.com",
+    "health_url": "https://iframe-analyzer.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_jsonp_finder",
+    "name": "go_jsonp_finder",
+    "display_name": "Jsonp Finder",
+    "description": "Microservice for Jsonp Finder",
+    "category": "security",
+    "port": 8228,
+    "docker_name": "go_jsonp_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_jsonp_finder",
+    "example_url": "https://jsonp-finder.0crawl.com/t/default_token/jsonp-finder?url=https://example.com",
+    "health_url": "https://jsonp-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_mime_trap",
+    "name": "go_mime_trap",
+    "display_name": "Mime Trap",
+    "description": "Microservice for Mime Trap",
+    "category": "security",
+    "port": 8145,
+    "docker_name": "go_mime_trap-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_mime_trap",
+    "example_url": "https://mime-trap.0crawl.com/t/default_token/mime-trap?url=https://example.com",
+    "health_url": "https://mime-trap.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_open_redirect",
+    "name": "go_open_redirect",
+    "display_name": "Open Redirect",
+    "description": "Microservice for Open Redirect",
+    "category": "security",
+    "port": 8149,
+    "docker_name": "go_open_redirect-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_open_redirect",
+    "example_url": "https://open-redirect.0crawl.com/t/default_token/open-redirect?target=example.com",
+    "health_url": "https://open-redirect.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_ratelimit_tester",
+    "name": "go_ratelimit_tester",
+    "display_name": "Ratelimit Tester",
+    "description": "Microservice for Ratelimit Tester",
+    "category": "security",
+    "port": 8226,
+    "docker_name": "go_ratelimit_tester-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_ratelimit_tester",
+    "example_url": "https://ratelimit-tester.0crawl.com/t/default_token/ratelimit-tester?target=example.com",
+    "health_url": "https://ratelimit-tester.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_secrets_scanner",
+    "name": "go_secrets_scanner",
+    "display_name": "Secrets Scanner",
+    "description": "Microservice for Secrets Scanner",
+    "category": "security",
+    "port": 8148,
+    "docker_name": "go_secrets_scanner-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_secrets_scanner",
+    "example_url": "https://secrets-scanner.0crawl.com/t/default_token/secrets-scanner?url=https://example.com",
+    "health_url": "https://secrets-scanner.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_smuggling_probe",
+    "name": "go_smuggling_probe",
+    "display_name": "Smuggling Probe",
+    "description": "Microservice for Smuggling Probe",
+    "category": "security",
+    "port": 8224,
+    "docker_name": "go_smuggling_probe-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_smuggling_probe",
+    "example_url": "https://smuggling-probe.0crawl.com/t/default_token/smuggling-probe?target=example.com",
+    "health_url": "https://smuggling-probe.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_subdomain_takeover",
+    "name": "go_subdomain_takeover",
+    "display_name": "Subdomain Takeover",
+    "description": "Microservice for Subdomain Takeover",
+    "category": "security",
+    "port": 8223,
+    "docker_name": "go_subdomain_takeover-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_subdomain_takeover",
+    "example_url": "https://subdomain-takeover.0crawl.com/t/default_token/subdomain-takeover?domain=example.com",
+    "health_url": "https://subdomain-takeover.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_xss_payload",
+    "name": "go_xss_payload",
+    "display_name": "Xss Payload",
+    "description": "Microservice for Xss Payload",
+    "category": "security",
+    "port": 8231,
+    "docker_name": "go_xss_payload-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_xss_payload",
+    "example_url": "https://xss-payload.0crawl.com/t/default_token/xss-payload?url=https://example.com",
+    "health_url": "https://xss-payload.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_zone_transfer",
+    "name": "go_zone_transfer",
+    "display_name": "Zone Transfer",
+    "description": "Microservice for Zone Transfer",
+    "category": "security",
+    "port": 8227,
+    "docker_name": "go_zone_transfer-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_zone_transfer",
+    "example_url": "https://zone-transfer.0crawl.com/t/default_token/zone-transfer?domain=example.com",
+    "health_url": "https://zone-transfer.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "security",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_admin_finder",
+    "name": "go_admin_finder",
+    "display_name": "Admin Finder",
+    "description": "Microservice for Admin Finder",
+    "category": "recon",
+    "port": 8130,
+    "docker_name": "go_admin_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_admin_finder",
+    "example_url": "https://admin-finder.0crawl.com/t/default_token/admin-finder?target=example.com",
+    "health_url": "https://admin-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_api_extractor",
+    "name": "go_api_extractor",
+    "display_name": "Api Extractor",
+    "description": "Microservice for Api Extractor",
+    "category": "recon",
+    "port": 8128,
+    "docker_name": "go_api_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_api_extractor",
+    "example_url": "https://api-extractor.0crawl.com/t/default_token/api-extractor?url=https://example.com",
+    "health_url": "https://api-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_asn_lookup",
+    "name": "go_asn_lookup",
+    "display_name": "Asn Lookup",
+    "description": "Microservice for Asn Lookup",
+    "category": "recon",
+    "port": 8123,
+    "docker_name": "go_asn_lookup-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_asn_lookup",
+    "example_url": "https://asn-lookup.0crawl.com/t/default_token/asn-lookup?url=https://example.com",
+    "health_url": "https://asn-lookup.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_blocklist_checker",
+    "name": "go_blocklist_checker",
+    "display_name": "Blocklist Checker",
+    "description": "Microservice for Blocklist Checker",
+    "category": "recon",
+    "port": 8125,
+    "docker_name": "go_blocklist_checker-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_blocklist_checker",
+    "example_url": "https://blocklist-checker.0crawl.com/t/default_token/blocklist-checker?url=https://example.com",
+    "health_url": "https://blocklist-checker.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_bucket_finder",
+    "name": "go_bucket_finder",
+    "display_name": "Bucket Finder",
+    "description": "Microservice for Bucket Finder",
+    "category": "recon",
+    "port": 8129,
+    "docker_name": "go_bucket_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_bucket_finder",
+    "example_url": "https://bucket-finder.0crawl.com/t/default_token/bucket-finder?url=https://example.com",
+    "health_url": "https://bucket-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_comment_extractor",
+    "name": "go_comment_extractor",
+    "display_name": "Comment Extractor",
+    "description": "Microservice for Comment Extractor",
+    "category": "recon",
+    "port": 8132,
+    "docker_name": "go_comment_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_comment_extractor",
+    "example_url": "https://comment-extractor.0crawl.com/t/default_token/comment-extractor?url=https://example.com",
+    "health_url": "https://comment-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_crypto_finder",
+    "name": "go_crypto_finder",
+    "display_name": "Crypto Finder",
+    "description": "Microservice for Crypto Finder",
+    "category": "recon",
+    "port": 8138,
+    "docker_name": "go_crypto_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_crypto_finder",
+    "example_url": "https://crypto-finder.0crawl.com/t/default_token/crypto-finder?url=https://example.com",
+    "health_url": "https://crypto-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_dir_listing",
+    "name": "go_dir_listing",
+    "display_name": "Dir Listing",
+    "description": "Microservice for Dir Listing",
+    "category": "recon",
+    "port": 8134,
+    "docker_name": "go_dir_listing-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_dir_listing",
+    "example_url": "https://dir-listing.0crawl.com/t/default_token/directory-listing?url=https://example.com",
+    "health_url": "https://dir-listing.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_email_harvester",
+    "name": "go_email_harvester",
+    "display_name": "Email Harvester",
+    "description": "Microservice for Email Harvester",
+    "category": "recon",
+    "port": 8137,
+    "docker_name": "go_email_harvester-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_email_harvester",
+    "example_url": "https://email-harvester.0crawl.com/t/default_token/email-harvester?url=https://example.com",
+    "health_url": "https://email-harvester.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_env_finder",
+    "name": "go_env_finder",
+    "display_name": "Env Finder",
+    "description": "Microservice for Env Finder",
+    "category": "recon",
+    "port": 8126,
+    "docker_name": "go_env_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_env_finder",
+    "example_url": "https://env-finder.0crawl.com/t/default_token/env-finder?url=https://example.com",
+    "health_url": "https://env-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_hidden_fields",
+    "name": "go_hidden_fields",
+    "display_name": "Hidden Fields",
+    "description": "Microservice for Hidden Fields",
+    "category": "recon",
+    "port": 8133,
+    "docker_name": "go_hidden_fields-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_hidden_fields",
+    "example_url": "https://hidden-fields.0crawl.com/t/default_token/hidden-fields?url=https://example.com",
+    "health_url": "https://hidden-fields.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_phone_extractor",
+    "name": "go_phone_extractor",
+    "display_name": "Phone Extractor",
+    "description": "Microservice for Phone Extractor",
+    "category": "recon",
+    "port": 8139,
+    "docker_name": "go_phone_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_phone_extractor",
+    "example_url": "https://phone-extractor.0crawl.com/t/default_token/phone-extractor?url=https://example.com",
+    "health_url": "https://phone-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_sourcemap_finder",
+    "name": "go_sourcemap_finder",
+    "display_name": "Sourcemap Finder",
+    "description": "Microservice for Sourcemap Finder",
+    "category": "recon",
+    "port": 8127,
+    "docker_name": "go_sourcemap_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_sourcemap_finder",
+    "example_url": "https://sourcemap-finder.0crawl.com/t/default_token/sourcemap-finder?url=https://example.com",
+    "health_url": "https://sourcemap-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_subdomain_finder",
+    "name": "go_subdomain_finder",
+    "display_name": "Subdomain Finder",
+    "description": "Microservice for Subdomain Finder",
+    "category": "recon",
+    "port": 8121,
+    "docker_name": "go_subdomain_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_subdomain_finder",
+    "example_url": "https://subdomain-finder.0crawl.com/t/default_token/subdomain-finder?domain=example.com",
+    "health_url": "https://subdomain-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_swagger_finder",
+    "name": "go_swagger_finder",
+    "display_name": "Swagger Finder",
+    "description": "Microservice for Swagger Finder",
+    "category": "recon",
+    "port": 8131,
+    "docker_name": "go_swagger_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_swagger_finder",
+    "example_url": "https://swagger-finder.0crawl.com/t/default_token/swagger-finder?target=example.com",
+    "health_url": "https://swagger-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_typosquat_finder",
+    "name": "go_typosquat_finder",
+    "display_name": "Typosquat Finder",
+    "description": "Microservice for Typosquat Finder",
+    "category": "recon",
+    "port": 8124,
+    "docker_name": "go_typosquat_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_typosquat_finder",
+    "example_url": "https://typosquat-finder.0crawl.com/t/default_token/typosquat-finder?domain=example.com",
+    "health_url": "https://typosquat-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_wayback_checker",
+    "name": "go_wayback_checker",
+    "display_name": "Wayback Checker",
+    "description": "Microservice for Wayback Checker",
+    "category": "recon",
+    "port": 8122,
+    "docker_name": "go_wayback_checker-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_wayback_checker",
+    "example_url": "https://wayback-checker.0crawl.com/t/default_token/wayback-checker?url=https://example.com",
+    "health_url": "https://wayback-checker.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_wellknown_scanner",
+    "name": "go_wellknown_scanner",
+    "display_name": "Wellknown Scanner",
+    "description": "Microservice for Wellknown Scanner",
+    "category": "recon",
+    "port": 8136,
+    "docker_name": "go_wellknown_scanner-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_wellknown_scanner",
+    "example_url": "https://wellknown-scanner.0crawl.com/t/default_token/wellknown-scanner?url=https://example.com",
+    "health_url": "https://wellknown-scanner.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_wp_plugins",
+    "name": "go_wp_plugins",
+    "display_name": "Wp Plugins",
+    "description": "Microservice for Wp Plugins",
+    "category": "recon",
+    "port": 8135,
+    "docker_name": "go_wp_plugins-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_wp_plugins",
+    "example_url": "https://wp-plugins.0crawl.com/t/default_token/wp-plugins?url=https://example.com",
+    "health_url": "https://wp-plugins.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "recon",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_caa_checker",
+    "name": "go_caa_checker",
+    "display_name": "Caa Checker",
+    "description": "Microservice for Caa Checker",
+    "category": "infrastructure",
+    "port": 8104,
+    "docker_name": "go_caa_checker-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_caa_checker",
+    "example_url": "https://caa-checker.0crawl.com/t/default_token/?target=example.com",
+    "health_url": "https://caa-checker.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_cdn_detector",
+    "name": "go_cdn_detector",
+    "display_name": "Cdn Detector",
+    "description": "Microservice for Cdn Detector",
+    "category": "infrastructure",
+    "port": 8102,
+    "docker_name": "go_cdn_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_cdn_detector",
+    "example_url": "https://cdn-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://cdn-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_compression_tester",
+    "name": "go_compression_tester",
+    "display_name": "Compression Tester",
+    "description": "Microservice for Compression Tester",
+    "category": "infrastructure",
+    "port": 8109,
+    "docker_name": "go_compression_tester-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_compression_tester",
+    "example_url": "https://compression-tester.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://compression-tester.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_hsts_checker",
+    "name": "go_hsts_checker",
+    "display_name": "Hsts Checker",
+    "description": "Microservice for Hsts Checker",
+    "category": "infrastructure",
+    "port": 8103,
+    "docker_name": "go_hsts_checker-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_hsts_checker",
+    "example_url": "https://hsts-checker.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://hsts-checker.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_http_protocol",
+    "name": "go_http_protocol",
+    "display_name": "Http Protocol",
+    "description": "Microservice for Http Protocol",
+    "category": "infrastructure",
+    "port": 8110,
+    "docker_name": "go_http_protocol-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_http_protocol",
+    "example_url": "https://http-protocol.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://http-protocol.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_ipv6_checker",
+    "name": "go_ipv6_checker",
+    "display_name": "Ipv6 Checker",
+    "description": "Microservice for Ipv6 Checker",
+    "category": "infrastructure",
+    "port": 8106,
+    "docker_name": "go_ipv6_checker-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_ipv6_checker",
+    "example_url": "https://ipv6-checker.0crawl.com/t/default_token/?target=example.com",
+    "health_url": "https://ipv6-checker.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_loadbalancer_detect",
+    "name": "go_loadbalancer_detect",
+    "display_name": "Loadbalancer Detect",
+    "description": "Microservice for Loadbalancer Detect",
+    "category": "infrastructure",
+    "port": 8107,
+    "docker_name": "go_loadbalancer_detect-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_loadbalancer_detect",
+    "example_url": "https://loadbalancer-detect.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://loadbalancer-detect.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_oauth_mapper",
+    "name": "go_oauth_mapper",
+    "display_name": "Oauth Mapper",
+    "description": "Microservice for Oauth Mapper",
+    "category": "infrastructure",
+    "port": 8112,
+    "docker_name": "go_oauth_mapper-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_oauth_mapper",
+    "example_url": "https://oauth-mapper.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://oauth-mapper.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_proxy_fingerprint",
+    "name": "go_proxy_fingerprint",
+    "display_name": "Proxy Fingerprint",
+    "description": "Microservice for Proxy Fingerprint",
+    "category": "infrastructure",
+    "port": 8108,
+    "docker_name": "go_proxy_fingerprint-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_proxy_fingerprint",
+    "example_url": "https://proxy-fingerprint.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://proxy-fingerprint.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_redirect_tracer",
+    "name": "go_redirect_tracer",
+    "display_name": "Redirect Tracer",
+    "description": "Microservice for Redirect Tracer",
+    "category": "infrastructure",
+    "port": 8101,
+    "docker_name": "go_redirect_tracer-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_redirect_tracer",
+    "example_url": "https://redirect-tracer.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://redirect-tracer.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_reverse_dns",
+    "name": "go_reverse_dns",
+    "display_name": "Reverse Dns",
+    "description": "Microservice for Reverse Dns",
+    "category": "infrastructure",
+    "port": 8105,
+    "docker_name": "go_reverse_dns-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_reverse_dns",
+    "example_url": "https://reverse-dns.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://reverse-dns.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_websocket_analyzer",
+    "name": "go_websocket_analyzer",
+    "display_name": "Websocket Analyzer",
+    "description": "Microservice for Websocket Analyzer",
+    "category": "infrastructure",
+    "port": 8111,
+    "docker_name": "go_websocket_analyzer-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_websocket_analyzer",
+    "example_url": "https://websocket-analyzer.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://websocket-analyzer.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "infrastructure",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_broken_links",
+    "name": "go_broken_links",
+    "display_name": "Broken Links",
+    "description": "Microservice for Broken Links",
+    "category": "web_analysis",
+    "port": 8192,
+    "docker_name": "go_broken_links-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_broken_links",
+    "example_url": "https://broken-links.0crawl.com/t/default_token/broken-links?url=https://example.com",
+    "health_url": "https://broken-links.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_captcha_detector",
+    "name": "go_captcha_detector",
+    "display_name": "Captcha Detector",
+    "description": "Microservice for Captcha Detector",
+    "category": "web_analysis",
+    "port": 8209,
+    "docker_name": "go_captcha_detector-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_captcha_detector",
+    "example_url": "https://captcha-detector.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://captcha-detector.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_feed_finder",
+    "name": "go_feed_finder",
+    "display_name": "Feed Finder",
+    "description": "Microservice for Feed Finder",
+    "category": "web_analysis",
+    "port": 8201,
+    "docker_name": "go_feed_finder-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_feed_finder",
+    "example_url": "https://feed-finder.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://feed-finder.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_jwt_debugger",
+    "name": "go_jwt_debugger",
+    "display_name": "Jwt Debugger",
+    "description": "Microservice for Jwt Debugger",
+    "category": "web_analysis",
+    "port": 8202,
+    "docker_name": "go_jwt_debugger-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_jwt_debugger",
+    "example_url": "https://jwt-debugger.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://jwt-debugger.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_login_analyzer",
+    "name": "go_login_analyzer",
+    "display_name": "Login Analyzer",
+    "description": "Microservice for Login Analyzer",
+    "category": "web_analysis",
+    "port": 8208,
+    "docker_name": "go_login_analyzer-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_login_analyzer",
+    "example_url": "https://login-analyzer.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://login-analyzer.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_pwa_manifest",
+    "name": "go_pwa_manifest",
+    "display_name": "Pwa Manifest",
+    "description": "Microservice for Pwa Manifest",
+    "category": "web_analysis",
+    "port": 8203,
+    "docker_name": "go_pwa_manifest-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_pwa_manifest",
+    "example_url": "https://pwa-manifest.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://pwa-manifest.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_robots_analyzer",
+    "name": "go_robots_analyzer",
+    "display_name": "Robots Analyzer",
+    "description": "Microservice for Robots Analyzer",
+    "category": "web_analysis",
+    "port": 8206,
+    "docker_name": "go_robots_analyzer-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_robots_analyzer",
+    "example_url": "https://robots-analyzer.0crawl.com/t/default_token/robots-analyzer?url=https://example.com",
+    "health_url": "https://robots-analyzer.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_schema_extractor",
+    "name": "go_schema_extractor",
+    "display_name": "Schema Extractor",
+    "description": "Microservice for Schema Extractor",
+    "category": "web_analysis",
+    "port": 8204,
+    "docker_name": "go_schema_extractor-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_schema_extractor",
+    "example_url": "https://schema-extractor.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://schema-extractor.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_security_txt",
+    "name": "go_security_txt",
+    "display_name": "Security Txt",
+    "description": "Microservice for Security Txt",
+    "category": "web_analysis",
+    "port": 8205,
+    "docker_name": "go_security_txt-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_security_txt",
+    "example_url": "https://security-txt.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://security-txt.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  },
+  {
+    "id": "go_tech_stack",
+    "name": "go_tech_stack",
+    "display_name": "Tech Stack",
+    "description": "Microservice for Tech Stack",
+    "category": "web_analysis",
+    "port": 8207,
+    "docker_name": "go_tech_stack-app-1",
+    "repo_url": "https://github.com/baditaflorin/go_tech_stack",
+    "example_url": "https://tech-stack.0crawl.com/t/default_token/?url=https://example.com",
+    "health_url": "https://tech-stack.0crawl.com/health",
+    "status": "unknown",
+    "tags": [
+      "go",
+      "web_analysis",
+      "microservice"
+    ]
+  }
+]

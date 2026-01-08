@@ -1,0 +1,5 @@
+{
+  "id": "go_services_dashboard",
+  "test_endpoint": "/api/services?url=https://example.com",
+  "description": "Auto-generated metadata for go_services_dashboard"
+}

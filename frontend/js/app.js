@@ -23,6 +23,9 @@ class ServicesDashboard {
             this.fetchServices();
             this.fetchStats();
         }, 30000);
+
+        // Expose for onclick handlers
+        window.dashboard = this;
     }
 
     bindEvents() {
@@ -114,8 +117,13 @@ class ServicesDashboard {
             </li>
             ${this.categories.map(cat => `
                 <li class="category ${this.currentCategory === cat.name ? 'active' : ''}" data-category="${cat.name}">
-                    <span class="category-name">${this.formatCategoryName(cat.name)}</span>
-                    <span class="category-count">${cat.count}</span>
+                    <div class="category-header">
+                        <span class="category-name">${this.formatCategoryName(cat.name)}</span>
+                        <span class="category-count">${cat.count}</span>
+                    </div>
+                    <button class="test-all-btn" data-category="${cat.name}" onclick="event.stopPropagation(); window.dashboard.runCategoryTests('${cat.name}')">
+                        Test All
+                    </button>
                 </li>
             `).join('')}
         `;
@@ -201,7 +209,7 @@ class ServicesDashboard {
                 
                 <div class="service-meta">
                     <span class="meta-tag category">${svc.category}</span>
-                    <span class="meta-tag version">v${svc.version || 'unknown'}</span>
+                    <span class="meta-tag version">${svc.version ? 'v' + svc.version : 'Unknown'}</span>
                     <span class="meta-tag port">:${svc.port}</span>
                     ${(svc.tags || []).slice(0, 2).map(tag =>
             `<span class="meta-tag">${tag}</span>`
@@ -215,12 +223,73 @@ class ServicesDashboard {
                 ` : ''}
                 
                 <div class="service-actions">
-                    <a href="${svc.health_url}" target="_blank" class="action-btn">Health</a>
-                    <a href="${svc.example_url}" target="_blank" class="action-btn">Test</a>
-                    <a href="${svc.repo_url}" target="_blank" class="action-btn primary">Repo</a>
+                    <div class="test-controls">
+                        <a href="${svc.example_url}" target="_blank" class="test-link" title="${svc.example_url}">
+                            <span class="link-icon">🔗</span> Test Link
+                        </a>
+                        <button onclick="window.dashboard.runTest('${svc.id}')" class="test-btn ${svc.test_status === 'passing' ? 'success' : (svc.test_status === 'failed' ? 'error' : '')}" title="Run Manual Test">
+                            Run Test ${svc.test_status === 'passing' ? '✓' : (svc.test_status === 'failed' ? '✗' : '')}
+                        </button>
+                    </div>
+                    <div class="action-row">
+                        <a href="${svc.health_url}" target="_blank" class="action-btn" title="Check Health Endpoint">Health</a>
+                        <a href="${svc.repo_url}" target="_blank" class="action-btn primary" title="View Repository">Repo</a>
+                    </div>
                 </div>
             </div>
         `;
+    }
+
+    async runTest(id) {
+        const btn = document.querySelector(`button[onclick="window.dashboard.runTest('${id}')"]`);
+        if (btn) {
+            btn.textContent = "Testing...";
+            btn.disabled = true;
+        }
+
+        try {
+            const res = await fetch(`/api/test/${id}`, { method: 'POST' });
+            const data = await res.json();
+            if (btn) {
+                if (data.test_status === 'passing') {
+                    btn.textContent = 'Run Test ✓';
+                    btn.classList.add('success');
+                    btn.classList.remove('error');
+                } else if (data.test_status === 'failed') {
+                    btn.textContent = 'Run Test ✗';
+                    btn.classList.add('error');
+                    btn.classList.remove('success');
+                } else {
+                    btn.textContent = 'Run Test';
+                }
+            }
+        } catch (e) {
+            console.error("Test failed", e);
+            if (btn) btn.textContent = 'Test Error';
+        } finally {
+            if (btn) btn.disabled = false;
+        }
+    }
+
+    async runCategoryTests(category) {
+        const btn = document.querySelector(`button[data-category="${category}"]`);
+        if (btn) {
+            btn.textContent = "Testing...";
+            btn.disabled = true;
+        }
+        try {
+            const res = await fetch(`/api/test-category/${category}`, { method: 'POST' });
+            if (res.ok) {
+                this.fetchServices();
+            }
+        } catch (e) {
+            console.error("Category test failed", e);
+        } finally {
+            if (btn) {
+                btn.textContent = `Test All ${category}`;
+                btn.disabled = false;
+            }
+        }
     }
 
     getResponseTimeClass(ms) {

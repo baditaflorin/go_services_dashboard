@@ -29,6 +29,7 @@ type Service struct {
 	ExampleURL  string    `json:"example_url"`
 	HealthURL   string    `json:"health_url"`
 	Status      string    `json:"status"`
+	TestStatus  string    `json:"test_status"` // New field for active link test
 	Version     string    `json:"version"`
 	LastChecked time.Time `json:"last_checked"`
 	ResponseMs  int64     `json:"response_ms"`
@@ -50,8 +51,7 @@ func NewRegistry() *Registry {
 }
 
 func (r *Registry) loadServices() {
-	// TODO: Implement proper scanning of ../../* directories
-	// For now, add self for testing
+	// Add self
 	r.AddService(&Service{
 		ID:          "services-dashboard",
 		Name:        "services-dashboard",
@@ -61,6 +61,39 @@ func (r *Registry) loadServices() {
 		HealthURL:   "http://localhost:8131/health",
 		Description: "The main dashboard",
 	})
+
+	// Load from config/services.json
+	configFile := "config/services.json"
+	content, err := os.ReadFile(configFile)
+	if err != nil {
+		log.Printf("Error reading config file: %v", err)
+		return
+	}
+
+	var config struct {
+		Services []Service `json:"services"` // matches output of generate_config
+	}
+	// Try unmarshalling as array first (if generate_config outputs array directly)
+	// Looking at generate_config.go, it might output array or object
+	// generate_config.go: services = append... json.NewEncoder(file).Encode(services) -> Array
+
+	if err := json.Unmarshal(content, &config.Services); err != nil {
+		// Fallback: maybe it's just the array?
+		var services []Service
+		if err2 := json.Unmarshal(content, &services); err2 == nil {
+			config.Services = services
+		} else {
+			log.Printf("Error parsing config file: %v", err)
+			return
+		}
+	}
+
+	for _, s := range config.Services {
+		// Create a copy of loop variable
+		svc := s
+		r.AddService(&svc)
+	}
+	log.Printf("Loaded %d services from config", len(config.Services))
 }
 
 func (r *Registry) AddService(s *Service) {
@@ -92,9 +125,32 @@ func (r *Registry) HandleListCategories(w http.ResponseWriter, req *http.Request
 }
 
 func (r *Registry) HandleStats(w http.ResponseWriter, req *http.Request) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
+	total := len(r.services)
+	healthy := 0
+	unhealthy := 0
+
+	for _, s := range r.services {
+		if s.Status == "healthy" {
+			healthy++
+		} else if s.Status == "unhealthy" {
+			unhealthy++
+		}
+	}
+
+	healthyPercent := 0.0
+	if total > 0 {
+		healthyPercent = (float64(healthy) / float64(total)) * 100
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"total_services": len(r.services),
+		"total":           total,
+		"healthy":         healthy,
+		"unhealthy":       unhealthy,
+		"healthy_percent": healthyPercent,
 	})
 }
 
@@ -119,6 +175,32 @@ func main() {
 	mux.HandleFunc("/api/services/", registry.HandleGetService)
 	mux.HandleFunc("/api/categories", registry.HandleListCategories)
 	mux.HandleFunc("/api/stats", registry.HandleStats)
+
+	// Manual Test Endpoint
+	mux.HandleFunc("/api/test/", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		// Extract ID from URL path /api/test/{id}
+		id := r.URL.Path[len("/api/test/"):]
+		if id == "" {
+			http.Error(w, "Missing service ID", http.StatusBadRequest)
+			return
+		}
+
+		status, err := monitor.TestActiveLink(id)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(map[string]string{
+			"id":          id,
+			"test_status": status,
+		})
+	})
 
 	// Health and version endpoints
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
