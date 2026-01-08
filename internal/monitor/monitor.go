@@ -65,14 +65,18 @@ func (m *Monitor) CheckAll() {
 func (m *Monitor) CheckService(svc *models.Service) {
 	start := time.Now()
 
-	// SMART HYBRID CHECK STRATEGY
-	// 1. Internal Permutations (Name x Port)
-	// 2. Public Fallback
+	// PROPER HEALTH CHECK STRATEGY:
+	// 1. Test internal /health endpoint
+	// 2. Test ExampleURL (actual service functionality)
+	// 3. Compute status: healthy (both OK), degraded (/health OK, ExampleURL fails), unhealthy (health fails)
 
-	status := "unhealthy"
+	healthOK := false
+	exampleOK := false
 	version := ""
+	healthError := ""
+	exampleError := ""
 
-	// Build permutation lists
+	// Build permutation lists for internal health check
 	names := []string{}
 	if svc.DockerName != "" {
 		names = append(names, svc.DockerName)
@@ -81,7 +85,6 @@ func (m *Monitor) CheckService(svc *models.Service) {
 		names = append(names, svc.ID)
 		names = append(names, svc.ID+"-app-1")
 	}
-	// unique names
 	uniqueNames := make([]string, 0, len(names))
 	seenNames := make(map[string]bool)
 	for _, n := range names {
@@ -99,43 +102,78 @@ func (m *Monitor) CheckService(svc *models.Service) {
 		ports = append(ports, 8080)
 	}
 
-	// 1. Try Internal Permutations
+	// STEP 1: Test Internal /health endpoint
 	for _, name := range uniqueNames {
 		for _, port := range ports {
 			internalURL := fmt.Sprintf("http://%s:%d/health", name, port)
 			resp, err := m.client.Get(internalURL)
 			if err == nil && resp.StatusCode == 200 {
-				status = "healthy"
+				healthOK = true
 				version = parseVersion(resp)
 				resp.Body.Close()
-				// Update service with CORRECT found values to speed up next time?
-				// Maybe not safe to modify config data in memory permanently if it drifts from source of truth,
-				// but for runtime it's fine.
 				svc.DockerName = name
 				svc.Port = port
-				goto CheckComplete
+				goto HealthCheckDone
 			}
-			if resp != nil {
+			if err != nil {
+				healthError = fmt.Sprintf("Connection: %v", err)
+			} else if resp != nil {
+				healthError = fmt.Sprintf("HTTP %d", resp.StatusCode)
 				resp.Body.Close()
 			}
 		}
 	}
 
-CheckComplete:
-	// 2. Fallback to Public Check if Internal failed
-	if status != "healthy" && svc.HealthURL != "" {
+	// Fallback to public HealthURL if internal failed
+	if !healthOK && svc.HealthURL != "" {
 		resp, err := m.client.Get(svc.HealthURL)
 		if err == nil && resp.StatusCode == 200 {
-			status = "healthy"
-			if version == "" {
-				version = parseVersion(resp)
-			}
+			healthOK = true
+			version = parseVersion(resp)
 			resp.Body.Close()
 		} else {
-			if resp != nil {
+			if err != nil {
+				healthError = fmt.Sprintf("Public health: %v", err)
+			} else if resp != nil {
+				healthError = fmt.Sprintf("Public health: HTTP %d", resp.StatusCode)
 				resp.Body.Close()
 			}
 		}
+	}
+
+HealthCheckDone:
+
+	// STEP 2: Test ExampleURL (actual service functionality)
+	if svc.ExampleURL != "" {
+		resp, err := m.client.Get(svc.ExampleURL)
+		if err == nil {
+			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+				exampleOK = true
+			} else {
+				exampleError = fmt.Sprintf("HTTP %d: %s", resp.StatusCode, resp.Status)
+			}
+			resp.Body.Close()
+		} else {
+			exampleError = fmt.Sprintf("Connection: %v", err)
+		}
+	} else {
+		// No ExampleURL configured - can't verify actual functionality
+		exampleOK = true // Assume OK if not configured
+		exampleError = "No ExampleURL configured"
+	}
+
+	// STEP 3: Compute final status
+	var status string
+	var lastError string
+	if healthOK && exampleOK {
+		status = "healthy"
+		lastError = ""
+	} else if healthOK && !exampleOK {
+		status = "degraded" // /health works but actual service broken
+		lastError = exampleError
+	} else {
+		status = "unhealthy"
+		lastError = healthError
 	}
 
 	elapsed := time.Since(start).Milliseconds()
@@ -144,6 +182,9 @@ CheckComplete:
 	svc.LastChecked = time.Now()
 	svc.ResponseMs = elapsed
 	svc.Status = status
+	svc.HealthStatus = map[bool]string{true: "ok", false: "fail"}[healthOK]
+	svc.ExampleStatus = map[bool]string{true: "ok", false: "fail"}[exampleOK]
+	svc.LastError = lastError
 	if version != "" {
 		svc.Version = version
 	}

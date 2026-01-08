@@ -17,7 +17,10 @@ type Service struct {
 	RepoURL       string    `json:"repo_url"`
 	ExampleURL    string    `json:"example_url"`
 	HealthURL     string    `json:"health_url"`
-	Status        string    `json:"status"`
+	Status        string    `json:"status"`         // healthy, degraded, unhealthy
+	HealthStatus  string    `json:"health_status"`  // /health endpoint status
+	ExampleStatus string    `json:"example_status"` // ExampleURL status
+	LastError     string    `json:"last_error,omitempty"`
 	TestStatus    string    `json:"test_status"`
 	TestError     string    `json:"test_error,omitempty"`
 	Version       string    `json:"version"`

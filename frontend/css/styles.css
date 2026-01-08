@@ -290,6 +290,11 @@ body::before {
     box-shadow: 0 0 8px var(--danger-glow);
 }
 
+.status-dot.degraded {
+    background: var(--warning);
+    box-shadow: 0 0 8px var(--warning-glow);
+}
+
 .status-dot.unknown {
     background: var(--text-muted);
 }
@@ -421,6 +426,11 @@ body::before {
 .status-indicator.unhealthy {
     background: rgba(239, 68, 68, 0.15);
     color: var(--danger);
+}
+
+.status-indicator.degraded {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
 }
 
 .status-indicator.unknown {
