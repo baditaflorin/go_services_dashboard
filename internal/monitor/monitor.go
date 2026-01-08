@@ -305,9 +305,16 @@ func (m *Monitor) TestActiveLink(id string) (string, string, error) {
 				}
 			}
 		}
+		// NOTE: If ExampleURL is present but all internal attempts failed, DO NOT FALLBACK to /health
+		// The user expects the "Run Test" button to test the ACTUAL service functionality.
+		// A 404 or connection error on the ExampleURL should be a failure, even if /health is fine.
+		if status == "failed" && errMsg == "" {
+			errMsg = "Internal test failed: could not reach service via internal network"
+		}
+		goto TestComplete
 	}
 
-	// FALLBACK: If no ExampleURL or internal test failed, test /health
+	// FALLBACK: If no ExampleURL, test internal /health endpoint
 	for _, name := range names {
 		for _, port := range ports {
 			testURL := fmt.Sprintf("http://%s:%d/health", name, port)
@@ -324,7 +331,7 @@ func (m *Monitor) TestActiveLink(id string) (string, string, error) {
 	}
 
 	if status == "failed" && errMsg == "" {
-		errMsg = "Could not reach service via any endpoint"
+		errMsg = "No ExampleURL configured, internal health check failed"
 	}
 
 TestComplete:
