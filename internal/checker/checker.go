@@ -73,45 +73,50 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 	// STEP 2: Test ExampleURL (actual service functionality)
 	var exampleStatusCode int
 	if svc.ExampleURL != "" {
-		// Try Internal First
-		path := GetPathFromURL(svc.ExampleURL)
-		resp, _, err := TryInternalRequest(client, svc, path)
+		// 1. Try Public URL First (End-to-End Check)
+		resp, err := client.Get(svc.ExampleURL)
 
-		if err == nil && resp != nil {
+		publicOK := false
+		if err == nil {
 			exampleStatusCode = resp.StatusCode
 			ct := resp.Header.Get("Content-Type")
-
 			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
 				if strings.Contains(ct, "text/html") {
-					exampleOK = false
-					exampleError = fmt.Sprintf("Unexpected HTML (HTTP %d)", resp.StatusCode)
+					exampleError = fmt.Sprintf("Public: Unexpected HTML (HTTP %d)", resp.StatusCode)
 				} else {
+					publicOK = true
 					exampleOK = true
 				}
 			} else {
-				exampleError = fmt.Sprintf("Internal HTTP %d: %s", resp.StatusCode, resp.Status)
+				exampleError = fmt.Sprintf("Public HTTP %d: %s", resp.StatusCode, resp.Status)
 			}
 			resp.Body.Close()
 		} else {
-			// Internal failed, try Public
-			resp, err := client.Get(svc.ExampleURL)
-			if err == nil {
-				exampleStatusCode = resp.StatusCode
-				ct := resp.Header.Get("Content-Type")
+			exampleError = fmt.Sprintf("Public Connection: %v", err)
+		}
 
+		// 2. If Public failed, Try Internal (Diagnosis)
+		if !publicOK {
+			path := GetPathFromURL(svc.ExampleURL)
+			resp, _, err := TryInternalRequest(client, svc, path)
+			if err == nil && resp != nil {
+				// We have internal connectivity
 				if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-					if strings.Contains(ct, "text/html") {
-						exampleOK = false
-						exampleError = fmt.Sprintf("Unexpected HTML (HTTP %d)", resp.StatusCode)
-					} else {
-						exampleOK = true
-					}
+					// Internal is fine, but Public failed -> DEGRADED
+					exampleError = fmt.Sprintf("%s | Internal OK (HTTP %d)", exampleError, resp.StatusCode)
+					// We DO NOT set exampleOK = true here, to force non-Healthy status
+					// But we want to distinguish Unhealthy vs Degraded?
+					// Logic below handles status. If exampleOK is false, it goes to Unhealthy/Degraded logic.
+					// We need to signal "Internal OK".
+					// We can use a special error prefix or handled in Step 3?
+					// To allow "Degraded" but not "Unhealthy", we need exampleStatusCode to be reliable?
+					// Or we set exampleOK = false (so not Green).
 				} else {
-					exampleError = fmt.Sprintf("Public HTTP %d: %s", resp.StatusCode, resp.Status)
+					exampleError = fmt.Sprintf("%s | Internal also failed (HTTP %d)", exampleError, resp.StatusCode)
 				}
 				resp.Body.Close()
 			} else {
-				exampleError = fmt.Sprintf("Connection: %v", err)
+				exampleError = fmt.Sprintf("%s | Internal unreachable", exampleError)
 			}
 		}
 	} else {
