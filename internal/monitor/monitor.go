@@ -160,7 +160,8 @@ func parseVersion(resp *http.Response) string {
 	return ""
 }
 
-// TestActiveLink checks the ExampleURL on demand (manual trigger)
+// TestActiveLink checks if the service is reachable (manual trigger)
+// Tries internal Docker DNS first, then falls back to public ExampleURL
 func (m *Monitor) TestActiveLink(id string) (string, error) {
 	m.registry.Mu.RLock()
 	svc, exists := m.registry.Services[id]
@@ -170,23 +171,58 @@ func (m *Monitor) TestActiveLink(id string) (string, error) {
 		return "", fmt.Errorf("service not found")
 	}
 
-	if svc.ExampleURL == "" {
-		return "skipped", nil
-	}
-
 	client := http.Client{
 		Timeout: 5 * time.Second,
 	}
-	resp, err := client.Get(svc.ExampleURL)
 
 	status := "failed"
-	if err == nil {
-		defer resp.Body.Close()
-		if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-			status = "passing"
+
+	// Try internal Docker endpoints first (using discovered DockerName/Port from health checks)
+	names := []string{}
+	if svc.DockerName != "" {
+		names = append(names, svc.DockerName)
+	}
+	if svc.ID != "" && svc.ID != svc.DockerName {
+		names = append(names, svc.ID)
+		names = append(names, svc.ID+"-app-1")
+	}
+
+	ports := []int{}
+	if svc.Port > 0 {
+		ports = append(ports, svc.Port)
+	}
+	if svc.Port != 8080 {
+		ports = append(ports, 8080)
+	}
+
+	// Try internal endpoints
+	for _, name := range names {
+		for _, port := range ports {
+			// Try root endpoint or health endpoint
+			testURL := fmt.Sprintf("http://%s:%d/health", name, port)
+			resp, err := client.Get(testURL)
+			if err == nil {
+				defer resp.Body.Close()
+				if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+					status = "passing"
+					goto TestComplete
+				}
+			}
 		}
 	}
 
+	// Fallback to public ExampleURL if internal failed
+	if status != "passing" && svc.ExampleURL != "" {
+		resp, err := client.Get(svc.ExampleURL)
+		if err == nil {
+			defer resp.Body.Close()
+			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
+				status = "passing"
+			}
+		}
+	}
+
+TestComplete:
 	m.registry.Mu.Lock()
 	svc.TestStatus = status
 	m.registry.Mu.Unlock()
