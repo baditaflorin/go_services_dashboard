@@ -1996,5 +1996,38 @@
       "web_analysis",
       "microservice"
     ]
+  },
+  {
+    "id": "go_html_proxy",
+    "name": "go_html_proxy",
+    "display_name": "HTML Proxy",
+    "description": "Core Proxy Service",
+    "category": "infrastructure",
+    "port": 3002,
+    "docker_name": "go-html-proxy",
+    "repo_url": "https://github.com/baditaflorin/go-html-proxy",
+    "health_url": "https://proxy.html.go.0prx.com/health",
+    "status": "unknown",
+    "tags": [
+      "core",
+      "proxy",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "go_search_duck_go",
+    "name": "go_search_duck_go",
+    "display_name": "DuckDuckGo Search",
+    "description": "Search API via DuckDuckGo",
+    "category": "infrastructure",
+    "port": 3401,
+    "docker_name": "go-search-duck-go",
+    "repo_url": "https://github.com/baditaflorin/go-search-duck-go",
+    "health_url": "https://search.duck.go.0prx.com/health",
+    "status": "unknown",
+    "tags": [
+      "search",
+      "infrastructure"
+    ]
   }
 ]
