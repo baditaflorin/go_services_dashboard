@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/baditaflorin/go_services_dashboard/internal/models"
@@ -42,7 +43,16 @@ func TestActiveLink(client *http.Client, svc *models.Service) TestServiceResult 
 						return TestServiceResult{Status: "passing", Error: fmt.Sprintf("OK in %dms", elapsed)}
 					}
 				}
-				// Valid HTTP but not expected JSON (relaxed check)
+				// Valid HTTP but not expected JSON (relaxed check?)
+				// CRITICAL: If response is HTML, it's likely an error page or default nginx page, NOT a valid API response.
+				ct := resp.Header.Get("Content-Type")
+				if strings.Contains(ct, "text/html") {
+					return TestServiceResult{
+						Status: "failed",
+						Error:  fmt.Sprintf("Unexpected HTML response (HTTP %d) - Check Service", resp.StatusCode),
+					}
+				}
+
 				return TestServiceResult{Status: "passing", Error: fmt.Sprintf("HTTP %d in %dms", resp.StatusCode, elapsed)}
 			}
 			return TestServiceResult{Status: "failed", Error: fmt.Sprintf("HTTP %d: %s", resp.StatusCode, resp.Status)}

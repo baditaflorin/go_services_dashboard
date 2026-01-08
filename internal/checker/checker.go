@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/baditaflorin/go_services_dashboard/internal/models"
@@ -78,20 +79,33 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 
 		if err == nil && resp != nil {
 			exampleStatusCode = resp.StatusCode
+			ct := resp.Header.Get("Content-Type")
+
 			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-				exampleOK = true
+				if strings.Contains(ct, "text/html") {
+					exampleOK = false
+					exampleError = fmt.Sprintf("Unexpected HTML (HTTP %d)", resp.StatusCode)
+				} else {
+					exampleOK = true
+				}
 			} else {
 				exampleError = fmt.Sprintf("Internal HTTP %d: %s", resp.StatusCode, resp.Status)
 			}
 			resp.Body.Close()
 		} else {
 			// Internal failed, try Public
-			// log.Printf("Internal ExampleURL failed for %s: %v. Trying public...", svc.ID, err)
 			resp, err := client.Get(svc.ExampleURL)
 			if err == nil {
 				exampleStatusCode = resp.StatusCode
+				ct := resp.Header.Get("Content-Type")
+
 				if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-					exampleOK = true
+					if strings.Contains(ct, "text/html") {
+						exampleOK = false
+						exampleError = fmt.Sprintf("Unexpected HTML (HTTP %d)", resp.StatusCode)
+					} else {
+						exampleOK = true
+					}
 				} else {
 					exampleError = fmt.Sprintf("Public HTTP %d: %s", resp.StatusCode, resp.Status)
 				}

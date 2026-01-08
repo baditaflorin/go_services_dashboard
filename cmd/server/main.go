@@ -12,7 +12,7 @@ import (
 	"github.com/baditaflorin/go_services_dashboard/internal/monitor"
 )
 
-const version = "1.7.1"
+const version = "1.7.2"
 
 func main() {
 	port := os.Getenv("PORT")
