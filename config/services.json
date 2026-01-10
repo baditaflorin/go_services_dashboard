@@ -980,7 +980,7 @@
     "port": 8141,
     "docker_name": "go_cors_tester-app-1",
     "repo_url": "https://github.com/baditaflorin/go_cors_tester",
-    "example_url": "https://cors-tester.0crawl.com/t/default_token/cors-tester?target=example.com",
+    "example_url": "https://cors-tester.0crawl.com/t/default_token/cors-tester?target=https://example.com",
     "health_url": "https://cors-tester.0crawl.com/health",
     "status": "unknown",
     "tags": [
@@ -1142,7 +1142,7 @@
     "port": 8149,
     "docker_name": "go_open_redirect-app-1",
     "repo_url": "https://github.com/baditaflorin/go_open_redirect",
-    "example_url": "https://open-redirect.0crawl.com/t/default_token/open-redirect?target=example.com",
+    "example_url": "https://open-redirect.0crawl.com/t/default_token/open-redirect?target=https://example.com",
     "health_url": "https://open-redirect.0crawl.com/health",
     "status": "unknown",
     "tags": [
