@@ -68,8 +68,9 @@ func (m *Monitor) checkService(svc *Service) {
 
 	// Construct Internal Health URL for reliable checking within cluster
 	checkURL := svc.HealthURL
-	if svc.DockerName != "" && svc.Port > 0 {
-		checkURL = fmt.Sprintf("http://%s:%d/health", svc.DockerName, svc.Port)
+	if svc.Port > 0 {
+		// Use localhost since we're using network_mode: host
+		checkURL = fmt.Sprintf("http://localhost:%d/health", svc.Port)
 	}
 
 	// Check Health
