@@ -75,6 +75,16 @@ func (m *Monitor) checkService(svc *Service) {
 
 	// Check Health
 	resp, err := m.client.Get(checkURL)
+
+	// DEBUG LOGGING
+	if svc.ID == "go-a1y-quick" || svc.Port == 8155 {
+		if err != nil {
+			log.Printf("[DEBUG] %s check failed: %v", svc.ID, err)
+		} else {
+			log.Printf("[DEBUG] %s check status: %d", svc.ID, resp.StatusCode)
+		}
+	}
+
 	elapsed := time.Since(start).Milliseconds()
 
 	m.registry.mu.Lock()
@@ -85,10 +95,12 @@ func (m *Monitor) checkService(svc *Service) {
 	// Handle Health Result
 	if err != nil {
 		svc.Status = "unhealthy"
+		// log.Printf("Error checking %s: %v", svc.Name, err)
 	} else {
 		defer resp.Body.Close()
 		if resp.StatusCode != http.StatusOK {
 			svc.Status = "unhealthy"
+			// log.Printf("Service %s returned status %d", svc.Name, resp.StatusCode)
 		} else {
 			// Try to parse version
 			var healthResp struct {
@@ -96,6 +108,11 @@ func (m *Monitor) checkService(svc *Service) {
 				Version string `json:"version"`
 			}
 			if err := json.NewDecoder(resp.Body).Decode(&healthResp); err == nil {
+				// DEBUG
+				if svc.Port == 8155 {
+					log.Printf("[DEBUG] %s parsed body: %+v", svc.ID, healthResp)
+				}
+
 				if healthResp.Version != "" {
 					svc.Version = healthResp.Version
 				}
@@ -104,8 +121,14 @@ func (m *Monitor) checkService(svc *Service) {
 					svc.Status = "healthy"
 				} else {
 					svc.Status = "unhealthy"
+					if svc.Port == 8155 {
+						log.Printf("[DEBUG] %s status not healthy/ok: %s", svc.ID, healthResp.Status)
+					}
 				}
 			} else {
+				if svc.Port == 8155 {
+					log.Printf("[DEBUG] %s json decode error: %v", svc.ID, err)
+				}
 				svc.Status = "healthy" // Assume healthy if 200 OK
 			}
 		}
