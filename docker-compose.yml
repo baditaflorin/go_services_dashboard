@@ -6,11 +6,4 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - "43565:43565"
-    networks:
-      - pentest_network
-
-networks:
-  pentest_network:
-    external: true
+    network_mode: host
