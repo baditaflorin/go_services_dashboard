@@ -24,10 +24,6 @@ type CheckServiceResult struct {
 
 // CheckService performs the health check logic
 func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
-	if svc.ID == "go_a11y_quick" {
-		// Use log.Printf to ensure stderr capture
-		log.Printf("[DEBUG-CHECKER] CheckService called for %s (Port: %d)\n", svc.ID, svc.Port)
-	}
 	start := time.Now()
 
 	healthOK := false
