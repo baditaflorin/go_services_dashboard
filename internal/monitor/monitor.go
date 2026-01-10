@@ -102,7 +102,6 @@ func (m *Monitor) CheckAll() {
 		go func() {
 			defer wg.Done()
 			for svc := range jobs {
-				log.Printf("[DEBUG-WORKER] Processing %s", svc.ID)
 				m.CheckService(svc)
 			}
 		}()
@@ -172,6 +171,7 @@ func (m *Monitor) CheckService(svc *models.Service) {
 	m.registry.Mu.Unlock()
 
 	// Broadcast update
+	log.Printf("Monitor: Updated %s to %s (Health: %s, Example: %s)", svc.ID, svc.Status, result.HealthStatus, result.ExampleStatus)
 	m.broadcast(ServiceUpdate{
 		ServiceID:  svc.ID,
 		Status:     svc.Status,
