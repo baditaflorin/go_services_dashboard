@@ -99,7 +99,8 @@ func (m *Monitor) checkService(svc *Service) {
 				if healthResp.Version != "" {
 					svc.Version = healthResp.Version
 				}
-				if healthResp.Status == "healthy" {
+				// Accept both "healthy" and "ok" as valid healthy statuses
+				if healthResp.Status == "healthy" || healthResp.Status == "ok" {
 					svc.Status = "healthy"
 				} else {
 					svc.Status = "unhealthy"
