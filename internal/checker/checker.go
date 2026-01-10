@@ -33,16 +33,42 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 
 	// STEP 1: Test Internal /health endpoint
 	resp, resolveURL, err := TryInternalRequest(client, svc, "/health")
+
+	// DEBUG 8155
+	if svc.Port == 8155 {
+		if err != nil {
+			fmt.Printf("[DEBUG-8155] TryInternalRequest failed: %v\n", err)
+		} else {
+			fmt.Printf("[DEBUG-8155] TryInternalRequest success: %s (Status: %d)\n", resolveURL, resp.StatusCode)
+		}
+	}
+
 	if err == nil && resp != nil && resp.StatusCode == 200 {
-		healthOK = true
-		version = parseVersion(resp)
+		var healthResp struct {
+			Status  string `json:"status"`
+			Version string `json:"version"`
+		}
+		if decodeErr := json.NewDecoder(resp.Body).Decode(&healthResp); decodeErr == nil {
+			if healthResp.Status == "healthy" || healthResp.Status == "ok" {
+				healthOK = true
+				version = healthResp.Version
+			} else {
+				healthError = fmt.Sprintf("Internal health status: %s", healthResp.Status)
+				if svc.Port == 8155 {
+					fmt.Printf("[DEBUG-8155] Status rejected: %s\n", healthResp.Status)
+				}
+			}
+		} else {
+			// If strictly JSON is required, this should fail. But historically we allowed 200 OK.
+			// Let's assume healthy if 200 OK but verify logs.
+			healthOK = true
+		}
 		resp.Body.Close()
 
 		// Update discovered connection details
 		u, _ := url.Parse(resolveURL)
 		if u != nil {
 			svc.DockerName = u.Hostname()
-			// Port parsing if needed, but TryInternalRequest iterates trusted ports
 		}
 	} else {
 		if err != nil {
@@ -56,8 +82,19 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 		if svc.HealthURL != "" {
 			resp, err := client.Get(svc.HealthURL)
 			if err == nil && resp.StatusCode == 200 {
-				healthOK = true
-				version = parseVersion(resp)
+				// Check Public Status too
+				var healthResp struct {
+					Status  string `json:"status"`
+					Version string `json:"version"`
+				}
+				if decodeErr := json.NewDecoder(resp.Body).Decode(&healthResp); decodeErr == nil {
+					if healthResp.Status == "healthy" || healthResp.Status == "ok" {
+						healthOK = true
+						version = healthResp.Version
+					}
+				} else {
+					healthOK = true
+				}
 				resp.Body.Close()
 			} else {
 				if err != nil {
