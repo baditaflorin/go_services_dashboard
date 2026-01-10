@@ -24,6 +24,8 @@ type Service struct {
 	TestStatus          string    `json:"test_status"`
 	TestError           string    `json:"test_error,omitempty"`
 	Version             string    `json:"version"`
+	LatestVersion       string    `json:"latest_version,omitempty"` // Latest available Docker image version
+	UpdateAvailable     bool      `json:"update_available"`         // True if Version != LatestVersion
 	LastChecked         time.Time `json:"last_checked"`
 	ResponseMs          int64     `json:"response_ms"`
 	Tags                []string  `json:"tags"`
