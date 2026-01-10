@@ -64,6 +64,10 @@ func (m *Monitor) checkAll() {
 }
 
 func (m *Monitor) checkService(svc *Service) {
+	if svc.Port == 8155 {
+		log.Printf("[DEBUG-8155] checkService called for %s", svc.ID)
+	}
+
 	start := time.Now()
 
 	// Construct Internal Health URL for reliable checking within cluster
@@ -71,6 +75,9 @@ func (m *Monitor) checkService(svc *Service) {
 	if svc.Port > 0 {
 		// Use localhost since we're using network_mode: host
 		checkURL = fmt.Sprintf("http://localhost:%d/health", svc.Port)
+		if svc.Port == 8155 {
+			log.Printf("[DEBUG-8155] Using checkURL: %s", checkURL)
+		}
 	}
 
 	// Check Health
