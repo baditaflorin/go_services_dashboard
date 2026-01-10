@@ -6,4 +6,13 @@ services:
     restart: always
     env_file:
       - .env
-    network_mode: host
+    ports:
+      - "43565:43565"
+    networks:
+      - pentest_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  pentest_network:
+    external: true

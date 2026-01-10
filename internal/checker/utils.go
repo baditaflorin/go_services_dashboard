@@ -10,10 +10,9 @@ import (
 )
 
 // GetInternalHosts returns possible container names
-func GetInternalHosts(svc *models.Service) []string {
 	names := []string{}
-	// Prioritize localhost for host-networking setups
-	names = append(names, "localhost")
+    // Use host.docker.internal to reach services running on host network from bridge container
+    names = append(names, "host.docker.internal")
 
 	if svc.DockerName != "" {
 		names = append(names, svc.DockerName)

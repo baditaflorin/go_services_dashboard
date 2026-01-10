@@ -171,7 +171,6 @@ func (m *Monitor) CheckService(svc *models.Service) {
 	m.registry.Mu.Unlock()
 
 	// Broadcast update
-	log.Printf("Monitor: Updated %s to %s (Health: %s, Example: %s)", svc.ID, svc.Status, result.HealthStatus, result.ExampleStatus)
 	m.broadcast(ServiceUpdate{
 		ServiceID:  svc.ID,
 		Status:     svc.Status,
