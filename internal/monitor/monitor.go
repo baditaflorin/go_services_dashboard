@@ -102,6 +102,7 @@ func (m *Monitor) CheckAll() {
 		go func() {
 			defer wg.Done()
 			for svc := range jobs {
+				log.Printf("[DEBUG-WORKER] Processing %s", svc.ID)
 				m.CheckService(svc)
 			}
 		}()

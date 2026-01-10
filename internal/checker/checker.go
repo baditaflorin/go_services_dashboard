@@ -3,6 +3,7 @@ package checker
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -24,8 +25,8 @@ type CheckServiceResult struct {
 // CheckService performs the health check logic
 func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 	if svc.ID == "go_a11y_quick" {
-		// Use fmt.Println to force stdout
-		fmt.Printf("[DEBUG-CHECKER] CheckService called for %s (Port: %d)\n", svc.ID, svc.Port)
+		// Use log.Printf to ensure stderr capture
+		log.Printf("[DEBUG-CHECKER] CheckService called for %s (Port: %d)\n", svc.ID, svc.Port)
 	}
 	start := time.Now()
 
@@ -41,9 +42,9 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 	// DEBUG 8155
 	if svc.Port == 8155 {
 		if err != nil {
-			fmt.Printf("[DEBUG-8155] TryInternalRequest failed: %v\n", err)
+			log.Printf("[DEBUG-8155] TryInternalRequest failed: %v\n", err)
 		} else {
-			fmt.Printf("[DEBUG-8155] TryInternalRequest success: %s (Status: %d)\n", resolveURL, resp.StatusCode)
+			log.Printf("[DEBUG-8155] TryInternalRequest success: %s (Status: %d)\n", resolveURL, resp.StatusCode)
 		}
 	}
 
@@ -59,7 +60,7 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 			} else {
 				healthError = fmt.Sprintf("Internal health status: %s", healthResp.Status)
 				if svc.Port == 8155 {
-					fmt.Printf("[DEBUG-8155] Status rejected: %s\n", healthResp.Status)
+					log.Printf("[DEBUG-8155] Status rejected: %s\n", healthResp.Status)
 				}
 			}
 		} else {
