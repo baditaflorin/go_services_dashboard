@@ -144,15 +144,9 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 			if err == nil && resp != nil {
 				// We have internal connectivity
 				if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-					// Internal is fine, but Public failed -> DEGRADED
+					// Internal is fine, but Public failed -> Mark as Healthy (Internal)
 					exampleError = fmt.Sprintf("%s | Internal OK (HTTP %d)", exampleError, resp.StatusCode)
-					// We DO NOT set exampleOK = true here, to force non-Healthy status
-					// But we want to distinguish Unhealthy vs Degraded?
-					// Logic below handles status. If exampleOK is false, it goes to Unhealthy/Degraded logic.
-					// We need to signal "Internal OK".
-					// We can use a special error prefix or handled in Step 3?
-					// To allow "Degraded" but not "Unhealthy", we need exampleStatusCode to be reliable?
-					// Or we set exampleOK = false (so not Green).
+					exampleOK = true
 				} else {
 					exampleError = fmt.Sprintf("%s | Internal also failed (HTTP %d)", exampleError, resp.StatusCode)
 				}
