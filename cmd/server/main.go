@@ -12,7 +12,7 @@ import (
 	"github.com/baditaflorin/go_services_dashboard/internal/monitor"
 )
 
-const version = "1.8.2"
+const version = "1.9.0"
 
 func main() {
 	port := os.Getenv("PORT")
@@ -44,6 +44,7 @@ func main() {
 	mux.HandleFunc("/api/test-category/", handler.HandleCategoryTest)
 	mux.HandleFunc("/api/events", handler.HandleEvents)
 	mux.HandleFunc("/api/refresh", handler.HandleRefresh)
+	mux.HandleFunc("/api/compliance", handler.HandleCompliance)
 
 	// System Health
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {

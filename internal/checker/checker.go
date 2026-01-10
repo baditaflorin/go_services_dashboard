@@ -158,20 +158,21 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 	}
 
 	// STEP 3: Compute final status
+	// PRIMARY: healthOK determines if service is healthy
+	// SECONDARY: exampleOK is informational (for debugging network/proxy issues)
 	var status string
 	var lastError string
-	if healthOK && exampleOK {
+	if healthOK {
+		// Health endpoint passed - service is healthy
+		// Example URL failures are informational only (network/proxy issues)
 		status = "healthy"
-		lastError = ""
-	} else if !healthOK {
+		if !exampleOK {
+			lastError = fmt.Sprintf("Healthy (Example URL issue: %s)", exampleError)
+		}
+	} else {
+		// Health endpoint failed - service is truly unhealthy
 		status = "unhealthy"
 		lastError = healthError
-	} else if exampleStatusCode >= 500 || exampleStatusCode == 0 {
-		status = "unhealthy"
-		lastError = exampleError
-	} else {
-		status = "degraded"
-		lastError = exampleError
 	}
 
 	elapsed := time.Since(start).Milliseconds()

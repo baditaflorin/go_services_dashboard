@@ -4,10 +4,30 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
+	"github.com/baditaflorin/go_services_dashboard/internal/compliance"
 	"github.com/baditaflorin/go_services_dashboard/internal/models"
 	"github.com/baditaflorin/go_services_dashboard/internal/monitor"
 )
+
+// ... existing code ...
+
+// HandleCompliance runs a standardization scan on all services
+func (h *Handler) HandleCompliance(w http.ResponseWriter, r *http.Request) {
+	services := h.Registry.GetAll()
+	reports := make([]compliance.ComplianceReport, 0, len(services))
+
+	client := &http.Client{Timeout: 5 * time.Second}
+
+	for _, svc := range services {
+		report := compliance.Scan(client, svc)
+		reports = append(reports, report)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(reports)
+}
 
 type Handler struct {
 	Registry *models.Registry
