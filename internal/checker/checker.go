@@ -109,14 +109,12 @@ func CheckService(client *http.Client, svc *models.Service) CheckServiceResult {
 	}
 
 	// STEP 2: Test ExampleURL (actual service functionality)
-	var exampleStatusCode int
 	if svc.ExampleURL != "" {
 		// 1. Try Public URL First (End-to-End Check)
 		resp, err := client.Get(svc.ExampleURL)
 
 		publicOK := false
 		if err == nil {
-			exampleStatusCode = resp.StatusCode
 			ct := resp.Header.Get("Content-Type")
 			if resp.StatusCode >= 200 && resp.StatusCode < 400 {
 				if strings.Contains(ct, "text/html") {
